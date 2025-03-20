@@ -1,26 +1,45 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class MembersService {
-  create(createMemberDto: CreateMemberDto) {
-    return 'This action adds a new member';
+  //dependency injection
+  constructor(private readonly prisma: PrismaClient) {}
+
+  async create(createMemberDto: CreateMemberDto) {
+    return this.prisma.member.create({
+      data: createMemberDto,
+    });
   }
 
-  findAll() {
-    return `This action returns all members`;
+  async findAll() {
+    return this.prisma.member.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} member`;
+  async findOne(id: number) {
+    const todo = await this.prisma.member.findUnique({
+      where: { id },
+    });
+    if (!todo) {
+      throw new NotFoundException('Member is not found');
+    }
+    return todo;
   }
 
-  update(id: number, updateMemberDto: UpdateMemberDto) {
-    return `This action updates a #${id} member`;
+  async update(id: number, updateMemberDto: UpdateMemberDto) {
+    await this.findOne(id);
+    return this.prisma.member.update({
+      where: { id },
+      data: updateMemberDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} member`;
+  async remove(id: number) {
+    await this.findOne(id);
+    return this.prisma.member.delete({
+      where: { id },
+    });
   }
 }

@@ -12,3 +12,47 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+enum ReservationType {
+  borrow
+  return
+}
+model Book {
+id Int @id @default(autoincrement())
+title String @db.VarChar(100)
+author String @db.VarChar(100)
+quantity Int?
+availability Boolean @default(false)
+created_at DateTime @default(now())
+updated_at DateTime @updatedAt
+
+@@map("books")
+}
+model Member{
+id Int @id @default(autoincrement())
+name String @db.VarChar(100)
+email String @db.VarChar(150) @unique
+mobile String @db.VarChar(15) @unique
+address String @db.VarChar(100)
+created_at DateTime @default(now())
+updated_at DateTime @updatedAt
+
+@@map("members")
+}
+model Transaction{
+id Int @id @default(autoincrement())
+transaction_date DateTime @default(now())
+type ReservationType @default(borrow)
+
+@@map("transactions")
+}
+model User{
+id Int  @id @default(autoincrement())
+name String @db.VarChar(100)
+email String @db.VarChar(100) @unique
+mobile String @db.VarChar(15) @unique
+password String @db.VarChar(100)
+created_at DateTime @default(now())
+updated_at DateTime @updatedAt
+
+@@map("users")
+}
