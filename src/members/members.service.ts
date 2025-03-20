@@ -19,13 +19,13 @@ export class MembersService {
   }
 
   async findOne(id: number) {
-    const todo = await this.prisma.member.findUnique({
+    const member = await this.prisma.member.findUnique({
       where: { id },
     });
-    if (!todo) {
+    if (!member) {
       throw new NotFoundException('Member is not found');
     }
-    return todo;
+    return member;
   }
 
   async update(id: number, updateMemberDto: UpdateMemberDto) {
