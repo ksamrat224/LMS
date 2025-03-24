@@ -18,17 +18,21 @@ enum ReservationType {
 }
 model Book {
 id Int @id @default(autoincrement())
+user_id Int
 title String @db.VarChar(100)
 author String @db.VarChar(100)
 quantity Int?
 availability Boolean @default(false)
 created_at DateTime @default(now())
 updated_at DateTime @updatedAt
+user User @relation(references: [id],fields: [user_id])
 
+transactions Transaction[]
 @@map("books")
 }
 model Member{
 id Int @id @default(autoincrement())
+user_id Int
 name String @db.VarChar(100)
 email String @db.VarChar(150) @unique
 mobile String @db.VarChar(15) @unique
@@ -36,13 +40,22 @@ address String @db.VarChar(100)
 created_at DateTime @default(now())
 updated_at DateTime @updatedAt
 
+user User @relation(references: [id],fields: [user_id])
+
+transactions Transaction[]
 @@map("members")
 }
 model Transaction{
 id Int @id @default(autoincrement())
+user_id Int
+book_id Int
+member_id Int
 transaction_date DateTime @default(now())
 type ReservationType @default(borrow)
 
+book Book @relation(references: [id],fields: [book_id])
+member Member @relation(references: [id],fields: [member_id])
+user User @relation(references: [id],fields: [user_id])
 @@map("transactions")
 }
 model User{
@@ -53,6 +66,9 @@ mobile String @db.VarChar(15) @unique
 password String @db.VarChar(100)
 created_at DateTime @default(now())
 updated_at DateTime @updatedAt
+members Member[]
+books Book[] 
+transactions Transaction[]
 
 @@map("users")
 }

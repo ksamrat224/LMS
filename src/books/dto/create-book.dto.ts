@@ -8,6 +8,10 @@ import {
 } from 'class-validator';
 
 export class CreateBookDto {
+  @IsOptional()
+  @IsNumber()
+  user_id: number;
+
   @IsNotEmpty()
   @IsString()
   title: string;
