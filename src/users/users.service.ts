@@ -9,6 +9,8 @@ export class UsersService {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(createUserDto: CreateUserDto) {
+    //logic to manage uniqueness of data i.e email & mobile
+
     return this.prisma.user.create({
       data: createUserDto,
     });

@@ -9,6 +9,7 @@ export class BooksService {
   constructor(private readonly prisma: PrismaClient) {}
 
   async create(createBookDto: CreateBookDto) {
+    createBookDto.user_id = 1;
     return this.prisma.book.create({
       data: createBookDto,
     });
