@@ -32,13 +32,15 @@ export class MembersService {
     });
   }
 
-  async findAll() {
-    return this.prisma.member.findMany();
+  async findAll(user_id: number) {
+    return this.prisma.member.findMany({
+      where: { user_id },
+    });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, user_id: number) {
     const member = await this.prisma.member.findUnique({
-      where: { id },
+      where: { id, user_id },
     });
     if (!member) {
       throw new NotFoundException('Member is not found');
@@ -48,7 +50,7 @@ export class MembersService {
 
   async update(id: number, updateMemberDto: UpdateMemberDto) {
     let member: Member | null;
-    await this.findOne(id);
+    await this.findOne(id, updateMemberDto.user_id as number);
     if (updateMemberDto.email) {
       member = await this.prisma.member.findUnique({
         where: { email: updateMemberDto.email },
@@ -73,8 +75,8 @@ export class MembersService {
     });
   }
 
-  async remove(id: number) {
-    await this.findOne(id);
+  async remove(id: number, user_id: number) {
+    await this.findOne(id, user_id);
     return this.prisma.member.delete({
       where: { id },
     });
