@@ -1,26 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class TransactionsService {
-  create(createTransactionDto: CreateTransactionDto) {
-    return 'This action adds a new transaction';
+  constructor(private readonly prisma: PrismaClient) {}
+  async create(createTransactionDto: CreateTransactionDto) {
+    return this.prisma.transaction.create({
+      data: createTransactionDto,
+    });
   }
 
-  findAll() {
-    return `This action returns all transactions`;
+  async findAll() {
+    return this.prisma.transaction.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} transaction`;
+  async findOne(id: number) {
+    const transaction = await this.prisma.transaction.findUnique({
+      where: { id },
+    });
+    if (!transaction) {
+      throw new NotFoundException('Transaction not found');
+    }
+    return transaction;
   }
 
-  update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    return `This action updates a #${id} transaction`;
+  async update(id: number, updateTransactionDto: UpdateTransactionDto) {
+    await this.findOne(id);
+    return this.prisma.transaction.update({
+      where: { id },
+      data: updateTransactionDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
+  async remove(id: number) {
+    await this.findOne(id);
+    return this.prisma.transaction.delete({
+      where: { id },
+    });
   }
 }
