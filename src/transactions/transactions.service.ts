@@ -67,13 +67,17 @@ export class TransactionsService {
     });
   }
 
-  async findAll() {
-    return this.prisma.transaction.findMany();
+  async findAll(user_id: number) {
+    return this.prisma.transaction.findMany({
+      where: {
+        user_id,
+      },
+    });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, user_id: number) {
     const transaction = await this.prisma.transaction.findUnique({
-      where: { id },
+      where: { id, user_id },
     });
     if (!transaction) {
       throw new NotFoundException('Transaction not found');
@@ -81,18 +85,10 @@ export class TransactionsService {
     return transaction;
   }
 
-  async update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    await this.findOne(id);
-    return this.prisma.transaction.update({
-      where: { id },
-      data: updateTransactionDto,
-    });
-  }
-
-  async remove(id: number) {
-    await this.findOne(id);
+  async remove(id: number, user_id: number) {
+    await this.findOne(id, user_id);
     return this.prisma.transaction.delete({
-      where: { id },
+      where: { id, user_id },
     });
   }
 }
