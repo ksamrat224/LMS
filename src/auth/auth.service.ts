@@ -46,10 +46,10 @@ export class AuthService {
     const token = await this.jwtService.signAsync(user);
     return { token };
   }
-  async profile(user_id : number) {
+  async profile(user_id: number) {
     return this.usersService.findOne(user_id);
   }
-  async updateProfile(user_id:number,updateProfileDto:UpdateProfileDto){
-    return this.usersService.update(user_id,UpdateProfileDto);
+  async updateProfile(user_id: number, updateProfileDto: UpdateProfileDto) {
+    return this.usersService.update(user_id, updateProfileDto);
   }
 }
