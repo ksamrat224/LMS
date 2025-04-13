@@ -2,13 +2,21 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { PrismaClient } from '@prisma/client';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @Injectable()
 export class BooksService {
   //dependency injection
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly prisma: PrismaClient,
+    private readonly cloudinary: CloudinaryService,
+  ) {}
 
   async create(createBookDto: CreateBookDto) {
+    if(createBookDto.book_img) {
+      createBookDto.book_img = await this.cloudinary.uploadFile(
+        createBookDto.book_img,
+      )
+    }
     return this.prisma.book.create({
       data: createBookDto,
     });

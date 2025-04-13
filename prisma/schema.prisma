@@ -23,7 +23,7 @@ title String @db.VarChar(100)
 author String @db.VarChar(100)
 quantity Int?
 book_img String?
-availability Boolean @default(false)
+availability Boolean @default(true)
 created_at DateTime @default(now())
 updated_at DateTime @updatedAt
 user User @relation(references: [id],fields: [user_id])

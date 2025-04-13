@@ -24,7 +24,11 @@ export class CreateBookDto {
   @IsNumber()
   quantity: number;
 
+  @IsOptional()
+  @IsString()
+  book_img: string;
+
   @IsBoolean()
-  @IsEmpty()
+  @IsNotEmpty()
   availability: boolean;
 }
