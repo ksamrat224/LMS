@@ -22,6 +22,7 @@ user_id Int
 title String @db.VarChar(100)
 author String @db.VarChar(100)
 quantity Int?
+book_img String?
 availability Boolean @default(false)
 created_at DateTime @default(now())
 updated_at DateTime @updatedAt
