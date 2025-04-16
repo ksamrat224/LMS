@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { BullModule } from '@nestjs/bull';
+import { join } from 'path';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 @Module({
   imports: [
@@ -26,6 +28,10 @@ import { BullModule } from '@nestjs/bull';
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASSWORD,
         },
+      },
+      template: {
+        dir: join(__dirname, 'templates'),
+        adapter: new HandlebarsAdapter(),
       },
     }),
     BullModule.forRoot({
