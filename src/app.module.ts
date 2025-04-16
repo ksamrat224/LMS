@@ -36,7 +36,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
     }),
     BullModule.forRoot({
       redis: {
-        host: process.env.REDIS_HOST!,
+        host: process.env.REDIS_HOST,
         port: parseInt(process.env.REDIS_PORT!),
       },
     }),
