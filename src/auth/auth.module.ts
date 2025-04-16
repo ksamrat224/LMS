@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { PrismaClient } from '@prisma/client';
 import { UsersService } from 'src/users/users.service';
 import { JwtModule } from '@nestjs/jwt';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -11,6 +12,9 @@ import { JwtModule } from '@nestjs/jwt';
       global: true,
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '15d' },
+    }),
+    BullModule.registerQueue({
+      name:'auth',
     }),
   ],
   controllers: [AuthController],
