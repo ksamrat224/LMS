@@ -12,6 +12,7 @@ import { compare } from 'bcrypt';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
+import { randomInt } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -21,12 +22,34 @@ export class AuthService {
     private readonly jwtService: JwtService,
     @InjectQueue('auth') private readonly queue: Queue,
   ) {}
+  //ensure the otp is unique by checking against existing codes in the database
+  async generateVerification() {
+    let verificationCode: number;
+    do {
+      verificationCode = randomInt(100000, 999999);
+      const existingCode = await this.prisma.verificationCode.findFirst({
+        where: { verificationCode },
+      });
+      if (!existingCode) {
+        return verificationCode;
+      }
+    } while (true);
+  }
   async register(registerDto: RegisterDto) {
     const user = await this.usersService.create(registerDto);
+
+    const otp = await this.generateVerification();
+    //store otp in the verification table
+    await this.prisma.verificationCode.create({
+      data: {
+        userId: user.id,
+        verificationCode: otp,
+      },
+    });
     await this.queue.add('verifyEmailAddress', {
-      from: 'test@example.com',
-      to: 'test@test.com',
-      otp: 123456,
+      from: 'info@lmsapp.com',
+      to: 'user.email',
+      otp: otp,
     });
     const token = await this.jwtService.signAsync(user);
     return { token };
