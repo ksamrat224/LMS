@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -25,6 +26,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASSWORD,
         },
+      },
+    }),
+    BullModule.forRoot({
+      redis: {
+        host: process.env.REDIS_HOST!,
+        port: parseInt(process.env.REDIS_PORT!),
       },
     }),
   ],
