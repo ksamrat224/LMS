@@ -1,6 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Process } from '@nestjs/bull';
+import { Process, Processor } from '@nestjs/bull';
 
+@Processor('auth')
 export class AuthProcessor {
   constructor(private readonly mail: MailerService) {}
   @Process('verifyEmailAddress')
@@ -9,7 +10,7 @@ export class AuthProcessor {
     try {
       await this.mail.sendMail({
         ...data,
-        subject: 'Verify your email address',
+        subject: 'Verify your email ',
         template: 'verify-email',
         context: {
           otp: data.otp,
