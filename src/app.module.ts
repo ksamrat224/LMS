@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -30,7 +31,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         },
       },
       template: {
-        dir: join(__dirname,'..', 'templates'),
+        dir: join(__dirname, '..', 'templates'),
         adapter: new HandlebarsAdapter(),
       },
     }),
