@@ -1,5 +1,4 @@
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Eye, EyeOff } from "lucide-react";
 import { MouseEvent, useState } from "react";
 
 interface InputProps {
@@ -40,7 +39,7 @@ const Input = ({ content, type, id, name }: InputProps) => {
             onClick={handleShowPassword}
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
-            <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
           </button>
         )}
       </div>
