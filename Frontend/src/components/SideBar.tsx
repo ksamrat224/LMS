@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import NavItem from "./NavItem";
 
 const SideBar = () => {
   return (
@@ -11,46 +11,13 @@ const SideBar = () => {
       <div className="p-6">
         <ul className="space-y-4 text-lg">
           <li>
-            <NavLink
-              to="/book"
-              className={({ isActive }) =>
-                `block px-4 py-2 rounded-lg transition ${
-                  isActive
-                    ? "bg-white text-blue-600 font-bold"
-                    : "text-white hover:bg-blue-600 hover:text-white"
-                }`
-              }
-            >
-              📚 Books
-            </NavLink>
+            <NavItem to="/book" label="Books" icon="📚" />
           </li>
           <li>
-            <NavLink
-              to="/member"
-              className={({ isActive }) =>
-                `block px-4 py-2 rounded-lg transition ${
-                  isActive
-                    ? "bg-white text-blue-600 font-bold"
-                    : "text-white hover:bg-blue-600 hover:text-white"
-                }`
-              }
-            >
-              👥 Members
-            </NavLink>
+            <NavItem to="/member" label="Members" icon="👥" />
           </li>
           <li>
-            <NavLink
-              to="/transaction"
-              className={({ isActive }) =>
-                `block px-4 py-2 rounded-lg transition ${
-                  isActive
-                    ? "bg-white text-blue-600 font-bold"
-                    : "text-white hover:bg-blue-600 hover:text-white"
-                }`
-              }
-            >
-              💳 Transactions
-            </NavLink>
+            <NavItem to="/transaction" label="Transactions" icon="💳" />
           </li>
         </ul>
       </div>
