@@ -20,6 +20,8 @@ const Register = () => {
         method: "POST",
         data: formValues,
       });
+      localStorage.setItem("token", response.data.token);
+         // Store the token in local storage
       console.log(response.data);
     } catch (error: any) {
       // Set the error message in case of an error
