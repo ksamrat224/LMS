@@ -1,14 +1,21 @@
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { FormEvent } from "react";
 
 const Login = () => {
+  const handleSubmit = async (e:FormEvent<HTMLFormElement>)=>{
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const formValues = Object.fromEntries(formData.entries());
+    console.log(formValues);
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
       <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-md">
         <h1 className="text-3xl font-extrabold text-center mb-8 text-gray-900">
           Login to Your Account
         </h1>
-        <form className="space-y-6">
+        <form className="space-y-6 " onSubmit={handleSubmit}>
           <Input name="username" type="text" id="username" content="Username" />
           <Input
             name="password"
