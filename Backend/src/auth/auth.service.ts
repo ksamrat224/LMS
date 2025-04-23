@@ -38,20 +38,20 @@ export class AuthService {
   async register(registerDto: RegisterDto) {
     const user = await this.usersService.create(registerDto);
 
-    const otp = await this.generateVerificationCode();
-    //store otp in the verification table
-    await this.prisma.verificationCode.create({
-      data: {
-        userId: user.id,
-        verificationCode: otp,
-      },
-    });
-    await this.queue.add('verifyEmailAddress', {
-      from: 'info@lmsapp.com',
-      to: user.email,
-      otp: otp,
-    });
-    
+    // const otp = await this.generateVerificationCode();
+    // //store otp in the verification table
+    // await this.prisma.verificationCode.create({
+    //   data: {
+    //     userId: user.id,
+    //     verificationCode: otp,
+    //   },
+    // });
+    // await this.queue.add('verifyEmailAddress', {
+    //   from: 'info@lmsapp.com',
+    //   to: user.email,
+    //   otp: otp,
+    // });
+
     const token = await this.jwtService.signAsync(user);
     return { token };
   }

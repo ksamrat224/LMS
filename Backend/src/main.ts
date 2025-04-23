@@ -6,7 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 
 async function bootstrap() {
   //application instance is created here
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule,{cors:true});
 
   //MiddleWare is applied here
   app.useGlobalPipes(new ValidationPipe());
