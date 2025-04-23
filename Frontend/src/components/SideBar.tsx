@@ -9,7 +9,7 @@ const SideBar = () => {
       </div>
       {/* Menu Items */}
       <div className="p-6">
-        <ul className="space-y-4 text-lg">
+        <ul className="space-y-4 text-lg font-bold">
           <li>
             <NavItem to="/book" label="Books" icon="📚" />
           </li>
