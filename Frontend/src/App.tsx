@@ -3,10 +3,15 @@ import Register from "./pages/Register"
 import Login from "./pages/Login"
 import AppLayout from "./layout/AppLayout"
 
+const ProtectedRoutes = () => {
+  const token = localStorage.getItem("token");
+  return token ? <AppLayout/> : <Login/>
+}
+
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<AppLayout />}>
+      <Route path="/" element={<ProtectedRoutes/>}>
         {/* Nested routes can be added here */}
         <Route path="/book" element={<div>Book Page</div>} />
         <Route path="/member" element={<div>Member Page</div>} />
