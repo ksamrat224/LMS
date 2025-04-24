@@ -19,6 +19,7 @@ const Login = () => {
         method: "POST",
         data: formValues,
       });
+      localStorage.setItem("token", response.data.token);
       console.log(response.data);
     } catch (error: any) {
       // Set the error message in case of an error
