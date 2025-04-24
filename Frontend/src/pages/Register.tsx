@@ -38,11 +38,11 @@ const Register = () => {
         {/* Display error message if it exists */}
         {errorMessage && <p className="text-red-500 text-center mb-4">{errorMessage}</p>}
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <Input name="name" type="text" id="name" content="Full Name" />
-          <Input name="email" type="email" id="email" content="Email Address" />
-          <Input name="mobile" type="tel" id="mobile" content="Mobile Number" />
-          <Input name="password" type="password" id="password" content="Password" />
-          <Button content="Register" type="submit" bgColor="bg-blue-600 hover:bg-blue-700" />
+          <Input name="name" type="text" id="name" label="Full Name" />
+          <Input name="email" type="email" id="email" label="Email Address" />
+          <Input name="mobile" type="tel" id="mobile" label="Mobile Number" />
+          <Input name="password" type="password" id="password" label="Password" />
+          <Button label="Register" type="submit" bgColor="bg-blue-600 hover:bg-blue-700" />
         </form>
         <p className="text-sm text-center text-gray-600 mt-6">
           Already have an account?{" "}

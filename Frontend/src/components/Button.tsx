@@ -1,11 +1,11 @@
 interface ButtonProps {
-    content: string;
+    label: string;
     type: "button" | "submit" | "reset";
     onClick?: () => void;
     bgColor?: string;
   }
   
-  const Button = ({ content, type, onClick, bgColor }: ButtonProps) => {
+  const Button = ({ label, type, onClick, bgColor }: ButtonProps) => {
     return (
       <div>
         <button
@@ -13,7 +13,7 @@ interface ButtonProps {
           type={type}
           className={`${bgColor} w-full text-white py-2 rounded-lg font-semibold hover:opacity-85 transition-colors`}
         >
-          {content}
+          {label}
         </button>
       </div>
     );
