@@ -2,10 +2,20 @@ import { Route, Routes } from "react-router"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
 import AppLayout from "./layout/AppLayout"
+import { jwtDecode } from "jwt-decode"
+import { Navigate } from "react-router"
 
 const ProtectedRoutes = () => {
-  const token = localStorage.getItem("token");
-  return token ? <AppLayout/> : <Login/>
+   const token = localStorage.getItem("token");
+   let decodedToken= null;
+   try{
+    decodedToken = token && jwtDecode(token);
+    console.log(decodedToken);
+   } catch (error) {
+    console.error("Invalid token", error);
+   }
+
+  return decodedToken ? <AppLayout/> : <Navigate to="/login" />;
 }
 
 const App = () => {

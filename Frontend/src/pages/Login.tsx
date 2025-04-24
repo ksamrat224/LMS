@@ -3,8 +3,10 @@ import Button from "../components/Button";
 import { FormEvent, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const Login = () => {
+  const navigate = useNavigate();
   const[errorMessage,setErrorMessage]= useState("");
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,6 +22,7 @@ const Login = () => {
         data: formValues,
       });
       localStorage.setItem("token", response.data.token);
+      navigate("/"); // Redirect to the home page after successful login
       console.log(response.data);
     } catch (error: any) {
       // Set the error message in case of an error
