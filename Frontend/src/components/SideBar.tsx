@@ -4,13 +4,14 @@ import NavItem from "./NavItem";
 
 const SideBar = () => {
   const navigate = useNavigate();
+  
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login"); // Redirect to the login page after logout
   };
 
   return (
-    <aside className="w-[25%] h-full bg-gradient-to-b from-blue-500 to-purple-600 text-white shadow-lg flex flex-col justify-between">
+    <aside className="w-[25%] h-full bg-gradient-to-b from-blue-500 to-purple-600 text-white shadow-lg flex flex-col">
       {/* Top Section: Title and Menu Items */}
       <div>
         {/* Title and Logo */}
@@ -27,7 +28,7 @@ const SideBar = () => {
         </nav>
       </div>
       {/* Bottom Section: Log Out Button */}
-      <div className="p-6">
+      <div className="p-6 mt-auto">
         <Button
           label="Log Out"
           type="button"
