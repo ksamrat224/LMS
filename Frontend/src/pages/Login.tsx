@@ -1,10 +1,9 @@
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { FormEvent, useState } from "react";
-import { BASE_URL } from "../utils/constants";
-import axios from "axios";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import { axiosInstance } from "../utils/axiosInterceptor";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,10 +14,7 @@ const Login = () => {
     const formValues = Object.fromEntries(formData.entries());
 
     try {
-      const response = await axios(`${BASE_URL}/auth/login`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await axiosInstance(`/auth/login`, {
         method: "POST",
         data: formValues,
       });
