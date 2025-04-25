@@ -1,9 +1,8 @@
 import { FormEvent, useState } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import axios from "axios";
-import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router";
+import { axiosInstance } from "../utils/axiosInterceptor";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -15,10 +14,7 @@ const Register = () => {
     const formValues = Object.fromEntries(formData.entries());
 
     try {
-      const response = await axios(`${BASE_URL}/auth/register`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      const response = await axiosInstance(`/auth/register`, {
         method: "POST",
         data: formValues,
       });
