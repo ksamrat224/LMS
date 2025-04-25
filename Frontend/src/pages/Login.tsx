@@ -25,14 +25,17 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
       navigate("/"); // Redirect to the home page after successful login
       console.log(response.data);
-      toast.success("Login successful!",{
-        type:"success"
+      toast("Login successful!",{
+        type:"success",
+        autoClose: 2000,
       });
     } catch (error: any) {
       // Set the error message in case of an error
       setErrorMessage(error.response?.data?.message || "LogIn failed. Please try again.");
       toast("Login failed. Please try again.",{
         type:"error",
+        autoClose: 2000,
+
       });
     }
   };
