@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,9 +25,15 @@ const Login = () => {
       localStorage.setItem("token", response.data.token);
       navigate("/"); // Redirect to the home page after successful login
       console.log(response.data);
+      toast.success("Login successful!",{
+        type:"success"
+      });
     } catch (error: any) {
       // Set the error message in case of an error
       setErrorMessage(error.response?.data?.message || "LogIn failed. Please try again.");
+      toast("Login failed. Please try again.",{
+        type:"error",
+      });
     }
   };
 

@@ -1,13 +1,29 @@
 import { useNavigate } from "react-router";
 import Button from "./Button";
 import NavItem from "./NavItem";
+import { Bounce, toast } from "react-toastify";
 
 const SideBar = () => {
   const navigate = useNavigate();
-  
+
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login"); // Redirect to the login page after logout
+    // Display the toast notification
+    toast.success("Logged out successfully!", {
+      position: "top-right",
+      autoClose: 2000, // Toast duration
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      onClose: () => {
+        // Perform logout and navigate after the toast closes
+        localStorage.removeItem("token");
+        navigate("/login");
+      },
+    });
   };
 
   return (
