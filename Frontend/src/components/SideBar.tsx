@@ -8,7 +8,7 @@ const SideBar = () => {
 
   const handleLogout = () => {
     // Display the toast notification
-    toast.success("Logged out successfully!", {
+    toast.success("Logging Out!", {
       position: "top-right",
       autoClose: 2000, // Toast duration
       hideProgressBar: false,
