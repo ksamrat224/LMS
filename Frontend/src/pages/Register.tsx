@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import { useNavigate } from "react-router";
 import { axiosInstance } from "../utils/axiosInterceptor";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Register = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const formValues = Object.fromEntries(formData.entries());
+  
 
     try {
       const response = await axiosInstance(`/auth/register`, {
@@ -22,6 +24,10 @@ const Register = () => {
          // Store the token in local storage
       navigate("/"); // Redirect to the home page after successful registration
       console.log(response.data);
+      toast("Register successful!",{
+              type:"success",
+              autoClose: 2000,
+            });
     } catch (error: any) {
       // Set the error message in case of an error
       setErrorMessage(error.response?.data?.message || "Registration failed. Please try again.");
