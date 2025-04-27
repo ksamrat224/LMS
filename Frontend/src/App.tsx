@@ -5,6 +5,7 @@ import AppLayout from "./layout/AppLayout"
 import { jwtDecode } from "jwt-decode"
 import { Navigate } from "react-router"
 import Books from "./pages/Books"
+import AddBook from "./pages/AddBook"
 
 const ProtectedRoutes = () => {
    const token = localStorage.getItem("token");
@@ -25,6 +26,7 @@ const App = () => {
       <Route path="/" element={<ProtectedRoutes/>}>
         {/* Nested routes can be added here */}
         <Route path="/book" element={<Books/>} />
+        <Route path="/add-book" element={<AddBook/>} />
         <Route path="/member" element={<div>Member Page</div>} />
         <Route path="/transaction" element={<div>Transaction Page</div>} />
       </Route>
