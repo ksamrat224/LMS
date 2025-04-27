@@ -81,7 +81,7 @@ const Books = () => {
                     index % 2 === 0 ? "bg-gray-50" : "bg-white"
                   } hover:bg-blue-100 transition duration-200`}
                 >
-                  <td className="px-6 py-4 text-gray-900 border-b">
+                  <td className="px-6 py-4 text-gray-900 border-b font-bold">
                     {book.title}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border-b">
