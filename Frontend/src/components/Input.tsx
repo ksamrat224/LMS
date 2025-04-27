@@ -6,9 +6,10 @@ interface InputProps {
   type: string;
   id: string;
   name: string;
+  required?: boolean|false;
 }
 
-const Input = ({ label, type, id, name }: InputProps) => {
+const Input = ({ label, type, id, name ,required }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = (e: MouseEvent<HTMLButtonElement>) => {
@@ -29,7 +30,7 @@ const Input = ({ label, type, id, name }: InputProps) => {
           type={inputType}
           id={id}
           name={name}
-          required
+          required={required}
           className={`border-none outline-0 ${
             isPassword ? "w-[90%]" : "w-full"
           }`}
