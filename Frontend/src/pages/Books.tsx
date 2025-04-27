@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { axiosInstance } from "../utils/axiosInterceptor";
+import Button from "../components/Button";
+import {  useNavigate } from "react-router";
 
 interface Book {
   title: string;
   author: string;
   id: number;
   quantity: number;
-  availability:boolean;
+  availability: boolean;
   book_img: string;
 }
 
 const Books = () => {
   const [data, setData] = useState<Book[]>([]);
+
   const fetchBooks = async () => {
     try {
       const response = await axiosInstance("/books"); // Adjust the endpoint as needed
@@ -25,13 +28,26 @@ const Books = () => {
   useEffect(() => {
     fetchBooks();
   }, []);
+  
+  const navigate = useNavigate();
+  
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white">
       {/* Header */}
       <header className="py-6 text-center bg-gradient-to-r from-purple-700 to-blue-700 shadow-lg">
         <h1 className="text-4xl font-extrabold tracking-wide">Library Books</h1>
-        <p className="text-lg mt-2">Explore the collection of books in our library</p>
+        <p className="text-lg mt-2">
+          Explore the collection of books in our library
+        </p>
+        <div className="mt-4 flex justify-end pr-6 space-x-4">
+          <Button
+            label="Add Book"
+            type="button"
+            onClick={() => navigate("/add-book")}
+            bgColor="bg-green-600 hover:bg-green-700"
+          />
+        </div>
       </header>
 
       {/* Table Container */}
@@ -62,10 +78,18 @@ const Books = () => {
                     index % 2 === 0 ? "bg-gray-50" : "bg-white"
                   } hover:bg-blue-100 transition duration-200`}
                 >
-                  <td className="px-6 py-4 text-gray-900 border-b">{book.id}</td>
-                  <td className="px-6 py-4 text-gray-900 border-b">{book.title}</td>
-                  <td className="px-6 py-4 text-gray-900 border-b">{book.author}</td>
-                  <td className="px-6 py-4 text-gray-900 border-b">{book.publishedYear}</td>
+                  <td className="px-6 py-4 text-gray-900 border-b">
+                    {book.id}
+                  </td>
+                  <td className="px-6 py-4 text-gray-900 border-b">
+                    {book.title}
+                  </td>
+                  <td className="px-6 py-4 text-gray-900 border-b">
+                    {book.author}
+                  </td>
+                  <td className="px-6 py-4 text-gray-900 border-b">
+                    {book.publishedYear}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -75,7 +99,9 @@ const Books = () => {
 
       {/* Footer */}
       <footer className="py-4 text-center bg-gradient-to-r from-purple-700 to-blue-700 shadow-lg">
-        <p className="text-sm text-white">© 2025 Library Management System. All rights reserved.</p>
+        <p className="text-sm text-white">
+          © 2025 Library Management System. All rights reserved.
+        </p>
       </footer>
     </div>
   );

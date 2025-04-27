@@ -11,7 +11,7 @@ interface ButtonProps {
         <button
           onClick={onClick}
           type={type}
-          className={`${bgColor} w-full text-white py-2 rounded-lg font-semibold hover:opacity-85 transition-colors`}
+          className={`${bgColor}  w-full text-white py-3 px-6 rounded-lg font-semibold hover:opacity-85 transition-colors`}
         >
           {label}
         </button>
