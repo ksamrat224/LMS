@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../utils/axiosInterceptor";
 
+interface Book {
+  title: string;
+  author: string;
+  id: number;
+  quantity: number;
+  availability:boolean;
+  book_img: string;
+}
+
 const Books = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Book[]>([]);
   const fetchBooks = async () => {
     try {
       const response = await axiosInstance("/books"); // Adjust the endpoint as needed
