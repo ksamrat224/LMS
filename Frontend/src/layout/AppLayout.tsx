@@ -7,7 +7,7 @@ const AppLayout = () => {
       <SideBar />
       <div className="w-[75%] h-full bg-gray-100 flex flex-col">
     
-        <div className="flex-grow overflow-auto">
+        <div className="flex-grow overflow-hidden">
           <Outlet />
           {/* This is where the nested routes will be rendered */}
         </div>

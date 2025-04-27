@@ -57,16 +57,19 @@ const Books = () => {
             <thead>
               <tr className="bg-gray-100 text-gray-700">
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border-b">
-                  ID
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border-b">
                   Title
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border-b">
                   Author
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border-b">
-                  Published Year
+                  Quantity
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border-b">
+                  Book Image
+                </th>
+                <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border-b">
+                  Availability
                 </th>
               </tr>
             </thead>
@@ -79,16 +82,31 @@ const Books = () => {
                   } hover:bg-blue-100 transition duration-200`}
                 >
                   <td className="px-6 py-4 text-gray-900 border-b">
-                    {book.id}
-                  </td>
-                  <td className="px-6 py-4 text-gray-900 border-b">
                     {book.title}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border-b">
                     {book.author}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border-b">
-                    {book.publishedYear}
+                    {book.quantity}
+                  </td>
+                  <td className="px-6 py-4 text-gray-900 border-b">
+                  {book.book_img ? (
+                     <img
+                       src={book.book_img}
+                       alt={book.title}
+                       className="w-16 h-16 object-cover rounded-md"
+                     />
+                   ) : (
+                     "No Image Available"
+                   )}
+                  </td>
+                  <td className="px-6 py-4 text-gray-900 border-b">
+                    {book.availability ? (
+                      <span className="text-green-600 font-semibold">Available</span>
+                    ) : (
+                      <span className="text-red-600 font-semibold">Not Available</span>
+                    )}
                   </td>
                 </tr>
               ))}
