@@ -3,8 +3,10 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import { axiosInstance } from "../utils/axiosInterceptor";
 import { FormEvent } from "react";
+import { useNavigate } from "react-router";
 
 const AddBook = () => {
+  const navigate= useNavigate();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -31,6 +33,7 @@ const AddBook = () => {
         draggable: true,
         progress: undefined,
       });
+      navigate("/book"); // Redirect to the books page after successful addition
     } catch (err: any) {
       console.log(err);
       toast.error("Failed, Please try again", {
@@ -104,6 +107,14 @@ const AddBook = () => {
             bgColor="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all"
           />
         </form>
+        <div className="mt-4 text-center">
+          <Button
+            label="Back to Books"
+            type="button"
+            onClick={() => navigate("/book")}
+            bgColor="bg-gray-500 hover:bg-gray-600"
+          />
+        </div>
       </div>
     </div>
   );
