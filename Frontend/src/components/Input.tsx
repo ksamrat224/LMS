@@ -7,9 +7,10 @@ interface InputProps {
   id: string;
   name: string;
   required?: boolean|false;
+  value?: string|number;
 }
 
-const Input = ({ label, type, id, name ,required }: InputProps) => {
+const Input = ({ label, type, id, name ,required,value }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = (e: MouseEvent<HTMLButtonElement>) => {
@@ -27,6 +28,7 @@ const Input = ({ label, type, id, name ,required }: InputProps) => {
       </label>
       <div className="flex items-center justify-between w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         <input
+          value={value}
           type={inputType}
           id={id}
           name={name}

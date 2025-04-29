@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PencilIcon, TrashIcon } from "lucide-react";
 
-interface Book {
+export interface Book {
   title: string;
   author: string;
   id: number;
@@ -117,8 +117,10 @@ const Books = () => {
                   </td>
                   <td className="px-6 py-4 text-gray-900 border border-gray-300">
                     <div className="flex space-x-4">
-                      <PencilIcon className="text-blue-600 cursor-pointer" 
-                       onClick={()=>navigate(`/edit-book/${book.id}`)} />
+                      <PencilIcon
+                        className="text-blue-600 cursor-pointer"
+                        onClick={() => navigate(`/edit-book/${book.id}`)}
+                      />
                       <TrashIcon className="text-red-600 cursor-pointer" />
                     </div>
                   </td>
