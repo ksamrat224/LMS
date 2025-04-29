@@ -25,6 +25,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<ProtectedRoutes/>}>
         {/* Nested routes can be added here */}
+        <Route path="/" element={<Navigate to="/book"/> }/>
         <Route path="/book" element={<Books/>} />
         <Route path="/add-book" element={<AddBook/>} />
         <Route path="/member" element={<div>Member Page</div>} />
@@ -33,6 +34,7 @@ const App = () => {
       {/* Public routes */}
       <Route path="/register" element={<Register/>}/>
       <Route path="/login" element={<Login/>} />
+      <Route path="*" element={<p className="text-center">ERROR 404: Page not Found!!</p>} />
       
     </Routes>
   )
