@@ -27,7 +27,7 @@ const SideBar = () => {
   };
 
   return (
-    <aside className="w-[25%] h-full bg-gradient-to-b from-blue-500 to-purple-600 text-white shadow-lg flex flex-col">
+    <aside className="relative w-[25%] h-full bg-gradient-to-b from-blue-500 to-purple-600 text-white shadow-lg flex flex-col">
       {/* Top Section: Title and Menu Items */}
       <div>
         {/* Title and Logo */}
@@ -44,12 +44,12 @@ const SideBar = () => {
         </nav>
       </div>
       {/* Bottom Section: Log Out Button */}
-      <div className="p-6 mt-auto">
+      <div className="mt-auto w-full">
         <Button
           label="Log Out"
           type="button"
           onClick={handleLogout}
-          bgColor="bg-red-500 hover:bg-red-700"
+          bgColor="bg-red-500 hover:bg-red-700 w-full"
         />
       </div>
     </aside>
