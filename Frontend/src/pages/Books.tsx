@@ -115,12 +115,7 @@ const Books = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="py-4 text-center bg-gradient-to-r from-purple-700 to-blue-700 shadow-lg">
-        <p className="text-sm text-white">
-          © 2025 Library Management System. All rights reserved.
-        </p>
-      </footer>
+      
     </div>
   );
 };
