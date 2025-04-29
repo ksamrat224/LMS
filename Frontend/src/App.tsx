@@ -28,6 +28,8 @@ const App = () => {
         <Route path="/" element={<Navigate to="/book"/> }/>
         <Route path="/book" element={<Books/>} />
         <Route path="/add-book" element={<AddBook/>} />
+        <Route path="/edit-book/:id" element={<AddBook/>} />
+        <Route path="/delete-book/:id" element={<AddBook/>} />
         <Route path="/member" element={<div>Member Page</div>} />
         <Route path="/transaction" element={<div>Transaction Page</div>} />
       </Route>
