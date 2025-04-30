@@ -62,7 +62,7 @@ const Books = () => {
       {/* Table Container */}
       <div className="flex-grow overflow-auto">
         <div className="h-full">
-          <table className="w-full h-full bg-white border-collapse border border-gray-300">
+          <table className="w-full table-fixed bg-white border-collapse border border-gray-300">
             <thead className="sticky top-0 bg-gray-200">
               <tr className="bg-gray-100 text-gray-700">
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
@@ -85,21 +85,21 @@ const Books = () => {
                 </th>
               </tr>
             </thead>
-            <tbody >
+            <tbody>
               {data.map((book: any, index: number) => (
                 <tr
                   key={book.id}
-                  className={`${
+                  className={`h-20 ${
                     index % 2 === 0 ? "bg-gray-50" : "bg-white"
                   } hover:bg-blue-100 transition duration-200`}
                 >
-                  <td className="px-6 py-4 text-gray-900 border border-gray-300 font-bold">
+                  <td className="px-6 py-4 text-gray-900 border border-gray-300 font-bold truncate">
                     {book.title}
                   </td>
-                  <td className="px-6 py-4 text-gray-900 border border-gray-300">
+                  <td className="px-6 py-4 text-gray-900 border border-gray-300 truncate">
                     {book.author}
                   </td>
-                  <td className="px-6 py-4 text-gray-900 border border-gray-300">
+                  <td className="px-6 py-4 text-gray-900 border border-gray-300 truncate">
                     {book.quantity}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border border-gray-300">
