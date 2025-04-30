@@ -30,6 +30,15 @@ const Books = () => {
     fetchBooks();
   }, []);
 
+  const handleDelete = async (id: number) => {
+    try {
+      await axiosInstance.delete(`/books/${id}`); // Adjust the endpoint as needed
+      setData((prevData) => prevData.filter((book) => book.id !== id));
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
+  };
+
   const navigate = useNavigate();
 
   return (
@@ -54,7 +63,7 @@ const Books = () => {
       <div className="flex-grow overflow-auto">
         <div className="h-full">
           <table className="w-full h-full bg-white border-collapse border border-gray-300">
-            <thead>
+            <thead className="sticky top-0 bg-gray-200">
               <tr className="bg-gray-100 text-gray-700">
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
                   Title
@@ -76,7 +85,7 @@ const Books = () => {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {data.map((book: any, index: number) => (
                 <tr
                   key={book.id}
@@ -121,7 +130,10 @@ const Books = () => {
                         className="text-blue-600 cursor-pointer"
                         onClick={() => navigate(`/edit-book/${book.id}`)}
                       />
-                      <TrashIcon className="text-red-600 cursor-pointer" />
+                      <TrashIcon
+                        className="text-red-600 cursor-pointer"
+                        onClick={() => handleDelete(book.id)}
+                      />
                     </div>
                   </td>
                 </tr>
