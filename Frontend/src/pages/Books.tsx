@@ -3,6 +3,7 @@ import { axiosInstance } from "../utils/axiosInterceptor";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PencilIcon, TrashIcon } from "lucide-react";
+import Modal from "../components/Modal";
 
 export interface Book {
   title?: string;
@@ -141,6 +142,7 @@ const Books = () => {
             </tbody>
           </table>
         </div>
+        <Modal/>
       </div>
     </div>
   );
