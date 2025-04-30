@@ -6,11 +6,18 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type: string;
   id: string;
   name: string;
-  required?: boolean ;
-  value?: string | number;
+  required?: boolean;
 }
 
-const Input = ({ label, type, id, name, required=true, value,...rest }: InputProps) => {
+const Input = ({
+  label,
+  type,
+  id,
+  name,
+  value = "",
+  required = true,
+  ...rest
+}: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = (e: MouseEvent<HTMLButtonElement>) => {
@@ -28,15 +35,15 @@ const Input = ({ label, type, id, name, required=true, value,...rest }: InputPro
       </label>
       <div className="flex items-center justify-between w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
         <input
-          value={value}
           type={inputType}
           id={id}
           name={name}
+          value={value}
           required={required}
           className={`border-none outline-0 ${
             isPassword ? "w-[90%]" : "w-full"
           }`}
-          {...rest}
+          {...rest} // Ensure onChange is passed here
         />
         {isPassword && (
           <button type="button" className="" onClick={handleShowPassword}>

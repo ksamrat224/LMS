@@ -7,23 +7,29 @@ import { useNavigate, useParams } from "react-router";
 import { Book } from "./Books";
 
 const AddBook = () => {
-  const navigate= useNavigate();
-  const [bookData, setBookData] = useState<Book>();
-  const {id}  = useParams();
+  const navigate = useNavigate();
+  const [bookData, setBookData] = useState<Book>({
+    title: "",
+    author: "",
+    quantity: 0,
+    book_img: "",
+    availability: false,
+  });
+  const { id } = useParams();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const formValues = JSON.stringify(Object.fromEntries(formData.entries()));
     const parsedFormValues = JSON.parse(formValues);
-    const url = id? `/books/${id}` : "/books";
+    const url = id ? `/books/${id}` : "/books";
 
     try {
-       await axiosInstance(url, {
-        method: id?"PATCH": "POST",
+      await axiosInstance(url, {
+        method: id ? "PATCH" : "POST",
         data: {
           ...parsedFormValues,
-          available_copies: parseInt(parsedFormValues?.available_copies, 10),
+          quantity: parseInt(parsedFormValues?.quantity, 10),
           availability: parsedFormValues?.availability === "on",
         },
       });
@@ -51,29 +57,31 @@ const AddBook = () => {
       });
     }
   };
-  
-    const fetchBookFromId = async () => {
-      try {
-        const response = await axiosInstance(`/books/${id}`); // Adjust the endpoint as needed
-        console.log(response.data);
-        setBookData({...response.data,availability:true});
-      } catch (error) {
-        console.error("Error fetching books:", error);
-      }
-    };
-  
-    useEffect(() => {
-      fetchBookFromId();
-    }, [id]);
 
-    const handleBookDataChange = (e:any) => {
-      const { name, value,checked } = e.target;
-      setBookData((prevData) => ({
+  const fetchBookFromId = async () => {
+    try {
+      const response = await axiosInstance(`/books/${id}`); // Adjust the endpoint as needed
+      setBookData({ ...response.data, availability: true });
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBookFromId();
+  }, [id]);
+
+  const handleBookDataChange = (e: any) => {
+    const { name, value, checked } = e.target;
+    setBookData((prevData) => {
+      const updatedData = {
         ...prevData,
         [name]: name === "availability" ? checked : value,
-      }));
-      console.log(bookData);
-    };
+      };
+      console.log(updatedData);
+      return updatedData;
+    });
+  };
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
@@ -90,6 +98,7 @@ const AddBook = () => {
             label="Title"
             required={true}
             value={bookData?.title}
+            onChange={handleBookDataChange}
           />
           {/* Author Input */}
           <Input
@@ -103,13 +112,12 @@ const AddBook = () => {
           />
           {/* Quantity Input */}
           <Input
-            name="available_copies"
+            name="quantity"
             type="number"
             id="quantity"
             label="Quantity"
-            value={bookData?.available_copies}
+            value={bookData?.quantity}
             onChange={handleBookDataChange}
-
           />
           {/* Book Image Input */}
           <Input
@@ -117,7 +125,9 @@ const AddBook = () => {
             type="text"
             id="book_img"
             label="Book Image"
+            required={false}
             value={bookData?.book_img}
+            onChange={handleBookDataChange}
           />
           {/* Availability Checkbox */}
           <div className="flex items-center">
@@ -138,7 +148,7 @@ const AddBook = () => {
           </div>
           {/* Submit Button */}
           <Button
-            label={id?"Edit Book":"Add Book"}
+            label={id ? "Edit Book" : "Add Book"}
             type="submit"
             bgColor="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all"
           />

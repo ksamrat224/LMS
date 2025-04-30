@@ -1,45 +1,46 @@
-import { Route, Routes } from "react-router"
-import Register from "./pages/Register"
-import Login from "./pages/Login"
-import AppLayout from "./layout/AppLayout"
-import { jwtDecode } from "jwt-decode"
-import { Navigate } from "react-router"
-import Books from "./pages/Books"
-import AddBook from "./pages/AddBook"
+import { Route, Routes } from "react-router";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import AppLayout from "./layout/AppLayout";
+import { jwtDecode } from "jwt-decode";
+import { Navigate } from "react-router";
+import Books from "./pages/Books";
+import AddBook from "./pages/AddBook";
 
 const ProtectedRoutes = () => {
-   const token = localStorage.getItem("token");
-   let decodedToken= null;
-   try{
+  const token = localStorage.getItem("token");
+  let decodedToken = null;
+  try {
     decodedToken = token && jwtDecode(token);
-    console.log(decodedToken);
-   } catch (error) {
+  } catch (error) {
     console.error("Invalid token", error);
-   }
+  }
 
-  return decodedToken ? <AppLayout/> : <Navigate to="/login" />;
-}
+  return decodedToken ? <AppLayout /> : <Navigate to="/login" />;
+};
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<ProtectedRoutes/>}>
+      <Route path="/" element={<ProtectedRoutes />}>
         {/* Nested routes can be added here */}
-        <Route path="/" element={<Navigate to="/book"/> }/>
-        <Route path="/book" element={<Books/>} />
-        <Route path="/add-book" element={<AddBook/>} />
-        <Route path="/edit-book/:id" element={<AddBook/>} />
-        <Route path="/delete-book/:id" element={<AddBook/>} />
+        <Route path="/" element={<Navigate to="/book" />} />
+        <Route path="/book" element={<Books />} />
+        <Route path="/add-book" element={<AddBook />} />
+        <Route path="/edit-book/:id" element={<AddBook />} />
+        <Route path="/delete-book/:id" element={<AddBook />} />
         <Route path="/member" element={<div>Member Page</div>} />
         <Route path="/transaction" element={<div>Transaction Page</div>} />
       </Route>
       {/* Public routes */}
-      <Route path="/register" element={<Register/>}/>
-      <Route path="/login" element={<Login/>} />
-      <Route path="*" element={<p className="text-center">ERROR 404: Page not Found!!</p>} />
-      
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route
+        path="*"
+        element={<p className="text-center">ERROR 404: Page not Found!!</p>}
+      />
     </Routes>
-  )
-}
+  );
+};
 
-export default App
+export default App;

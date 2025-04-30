@@ -8,10 +8,9 @@ export interface Book {
   title?: string;
   author?: string;
   id?: number;
-  quantity: number;
-  available_copies?: number;
+  quantity?: number;
   availability?: boolean;
-  book_img: string;
+  book_img?: string;
 }
 
 const Books = () => {
