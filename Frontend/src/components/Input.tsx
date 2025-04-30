@@ -10,7 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value?: string | number;
 }
 
-const Input = ({ label, type, id, name, required, value,...rest }: InputProps) => {
+const Input = ({ label, type, id, name, required=true, value,...rest }: InputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = (e: MouseEvent<HTMLButtonElement>) => {

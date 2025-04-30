@@ -10,22 +10,23 @@ const AddBook = () => {
   const navigate= useNavigate();
   const [bookData, setBookData] = useState<Book>();
   const {id}  = useParams();
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const formValues = JSON.stringify(Object.fromEntries(formData.entries()));
     const parsedFormValues = JSON.parse(formValues);
+    const url = id? `/books/${id}` : "/books";
 
     try {
-      const response = await axiosInstance(`/books`, {
-        method: "POST",
+       await axiosInstance(url, {
+        method: id?"PATCH": "POST",
         data: {
           ...parsedFormValues,
-          quantity: parseInt(parsedFormValues?.quantity, 10),
+          available_copies: parseInt(parsedFormValues?.available_copies, 10),
           availability: parsedFormValues?.availability === "on",
         },
       });
-      console.log(response.data);
 
       toast.success("Book Added Successfully", {
         position: "top-right",
@@ -53,9 +54,9 @@ const AddBook = () => {
   
     const fetchBookFromId = async () => {
       try {
-        const response = await axiosInstance("/books"); // Adjust the endpoint as needed
+        const response = await axiosInstance(`/books/${id}`); // Adjust the endpoint as needed
         console.log(response.data);
-        setBookData(response.data);
+        setBookData({...response.data,availability:true});
       } catch (error) {
         console.error("Error fetching books:", error);
       }
@@ -64,6 +65,15 @@ const AddBook = () => {
     useEffect(() => {
       fetchBookFromId();
     }, [id]);
+
+    const handleBookDataChange = (e:any) => {
+      const { name, value,checked } = e.target;
+      setBookData((prevData) => ({
+        ...prevData,
+        [name]: name === "availability" ? checked : value,
+      }));
+      console.log(bookData);
+    };
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
@@ -89,14 +99,16 @@ const AddBook = () => {
             label="Author"
             required={true}
             value={bookData?.author}
+            onChange={handleBookDataChange}
           />
           {/* Quantity Input */}
           <Input
-            name="quantity"
+            name="available_copies"
             type="number"
             id="quantity"
             label="Quantity"
-            value={bookData?.quantity}
+            value={bookData?.available_copies}
+            onChange={handleBookDataChange}
 
           />
           {/* Book Image Input */}
@@ -120,11 +132,13 @@ const AddBook = () => {
               id="availability"
               name="availability"
               className="mx-3 w-5 h-5"
+              checked={bookData?.availability}
+              onChange={handleBookDataChange}
             />
           </div>
           {/* Submit Button */}
           <Button
-            label="Add Book"
+            label={id?"Edit Book":"Add Book"}
             type="submit"
             bgColor="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all"
           />
