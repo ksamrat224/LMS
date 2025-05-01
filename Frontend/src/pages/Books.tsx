@@ -33,13 +33,22 @@ const Books = () => {
     fetchBooks();
   }, []);
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async () => {
     try {
-      await axiosInstance.delete(`/books/${id}`); // Adjust the endpoint as needed
-      setData((prevData) => prevData.filter((book) => book.id !== id));
+      await axiosInstance.delete(`/books/${selectedBookId}`); // Adjust the endpoint as needed
+      setData((prevData) => prevData.filter((book) => book.id !== selectedBookId));
+      setIsModelOpen(false);
     } catch (error) {
       console.error("Error deleting book:", error);
     }
+  };
+  const openModel= (id: number) => {
+    setIsModelOpen(true);
+    setSelectedBookId(id);
+  };
+  const closeModel = () => {
+    setIsModelOpen(false);
+    setSelectedBookId(null);
   };
 
   const navigate = useNavigate();
@@ -135,7 +144,7 @@ const Books = () => {
                       />
                       <TrashIcon
                         className="text-red-600 cursor-pointer"
-                        onClick={() => handleDelete(book.id)}
+                        onClick={() => openModel(book.id as number)}
                       />
                     </div>
                   </td>
@@ -144,8 +153,11 @@ const Books = () => {
             </tbody>
           </table>
         </div>
-        <Modal/>
       </div>
+        <Modal
+         isModelOpen={isModelOpen}
+         onClose={closeModel}
+         onConfirm={handleDelete}/>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import Button from "./Button";
 interface ModalProps {
+  isModelOpen: boolean;
   onConfirm: () => void;
   onClose: () => void;
 }
