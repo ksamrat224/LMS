@@ -16,6 +16,7 @@ export interface Book {
 
 const Books = () => {
   const [data, setData] = useState<Book[]>([]);
+  const [isModelOpen, setIsModelOpen] = useState(false);
 
   const fetchBooks = async () => {
     try {
