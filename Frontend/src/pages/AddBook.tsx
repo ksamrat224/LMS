@@ -29,8 +29,13 @@ const AddBook = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const formValues = JSON.stringify(Object.fromEntries(formData.entries()));
-    const parsedFormValues = JSON.parse(formValues);
+    const formValues = Object.fromEntries(formData.entries());
+    const parsedFormValues = {
+      ...formValues,
+      quantity: parseInt(formValues?.quantity as string, 10),
+      availability: formValues?.availability === "on",
+      book_img: base64IMG||bookData?.book_img,//use the base 64 image or existing image 
+    };
     const url = id ? `/books/${id}` : "/books";
 
     try {
@@ -38,8 +43,6 @@ const AddBook = () => {
         method: id ? "PATCH" : "POST",
         data: {
           ...parsedFormValues,
-          quantity: parseInt(parsedFormValues?.quantity, 10),
-          availability: parsedFormValues?.availability === "on",
         },
       });
 
