@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PencilIcon, TrashIcon } from "lucide-react";
 import Modal from "../components/Modal";
+import { toast } from "react-toastify";
 
 export interface Book {
   title?: string;
@@ -37,6 +38,15 @@ const Books = () => {
     try {
       await axiosInstance.delete(`/books/${selectedBookId}`); // Adjust the endpoint as needed
       setData((prevData) => prevData.filter((book) => book.id !== selectedBookId));
+      toast.success("Book deleted successfully!",{
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setIsModelOpen(false);
     } catch (error) {
       console.error("Error deleting book:", error);
