@@ -56,7 +56,7 @@ const AddBook = () => {
         draggable: true,
         progress: undefined,
       });
-      navigate("/books");
+      navigate("/book");
     } catch (err: any) {
       setErrorMessage(
         err.response?.data?.message || "Failed, Please try again"
@@ -106,7 +106,7 @@ const AddBook = () => {
       <div className="bg-white shadow-lg rounded-lg p-5 w-[500px] max-h-[90vh]">
         <h1
           className="font-bold text-center mb-5 flex items-center cursor-pointer text-gray-700"
-          onClick={() => navigate("/books")}
+          onClick={() => navigate("/book")}
         >
           <ArrowLeft />
           <span className="px-2">Back to books</span>
