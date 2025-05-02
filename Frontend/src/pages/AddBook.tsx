@@ -5,9 +5,11 @@ import { axiosInstance } from "../utils/axiosInterceptor";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Book } from "./Books";
+import { Image, ArrowLeft } from "lucide-react";
 
 const AddBook = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [base64IMG, setBase64IMG] = useState<string | ArrayBuffer | null>(null);
   const [bookData, setBookData] = useState<Book>({
     title: "",
@@ -16,12 +18,12 @@ const AddBook = () => {
     book_img: "",
     availability: false,
   });
-  const { id } = useParams();
-  const convertToBase64 = (selectedfile: File) => {
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const convertToBase64 = (selectedFile: File) => {
     const reader = new FileReader();
-    reader.readAsDataURL(selectedfile);
-    reader.onloadend = () => {
-      console.log("Base64 Image: ", reader.result);
+    reader.readAsDataURL(selectedFile);
+    reader.onload = () => {
       setBase64IMG(reader.result);
     };
   };
@@ -32,21 +34,20 @@ const AddBook = () => {
     const formValues = Object.fromEntries(formData.entries());
     const parsedFormValues = {
       ...formValues,
-      quantity: parseInt(formValues?.quantity as string, 10),
-      availability: formValues?.availability === "on",
-      book_img: base64IMG||bookData?.book_img,//use the base 64 image or existing image 
+      quantity: parseInt(formValues.quantity as string, 10),
+      availability: formValues.availability === "on",
+      book_img: base64IMG || bookData?.book_img,
     };
+
     const url = id ? `/books/${id}` : "/books";
 
     try {
       await axiosInstance(url, {
         method: id ? "PATCH" : "POST",
-        data: {
-          ...parsedFormValues,
-        },
+        data: parsedFormValues,
       });
 
-      toast.success("Book Added Successfully", {
+      toast.success(`Book ${id ? "Updated" : "Added"} Successfully`, {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -55,9 +56,11 @@ const AddBook = () => {
         draggable: true,
         progress: undefined,
       });
-      navigate("/book"); // Redirect to the books page after successful addition
+      navigate("/books");
     } catch (err: any) {
-      console.log(err);
+      setErrorMessage(
+        err.response?.data?.message || "Failed, Please try again"
+      );
       toast.error("Failed, Please try again", {
         position: "top-right",
         autoClose: 1000,
@@ -71,26 +74,26 @@ const AddBook = () => {
   };
 
   const fetchBookFromId = async () => {
+    if (!id) return;
     try {
-      const response = await axiosInstance(`/books/${id}`); // Adjust the endpoint as needed
-      setBookData({ ...response.data, availability: true });
+      const response = await axiosInstance(`/books/${id}`);
+      setBookData(response.data);
       setBase64IMG(response.data.book_img);
     } catch (error) {
-      console.error("Error fetching books:", error);
+      console.error("Error fetching book:", error);
     }
   };
 
   useEffect(() => {
-    if (id) {
-      fetchBookFromId();
-    }
+    fetchBookFromId();
   }, [id]);
 
-  const handleBookDataChange = (e: any) => {
-    const { name, value, checked,type,files } = e.target;
-    if(name==="book_img" && files && files[0]) {
+  const handleBookChange = (e: any) => {
+    const { name, value, checked, type, files } = e.target;
+
+    if (name === "book_img" && files && files[0]) {
       convertToBase64(files[0]);
-    } else{
+    } else {
       setBookData((prevData) => ({
         ...prevData,
         [name]: type === "checkbox" ? checked : value,
@@ -99,63 +102,67 @@ const AddBook = () => {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
-      <div className="bg-white p-6 md:p-8 rounded-xl shadow-2xl w-full max-w-2xl">
-        <h1 className="text-4xl font-extrabold text-center mb-6 text-gray-900 tracking-tight">
-          Add a New Book
+    <div className="flex justify-center mt-1">
+      <div className="bg-white shadow-lg rounded-lg p-5 w-[500px] max-h-[90vh]">
+        <h1
+          className="font-bold text-center mb-5 flex items-center cursor-pointer text-gray-700"
+          onClick={() => navigate("/books")}
+        >
+          <ArrowLeft />
+          <span className="px-2">Back to books</span>
+        </h1>
+        <h1 className="text-2xl font-bold text-center text-indigo-700">
+          {id ? "Edit Book" : "Add New Book"}
         </h1>
         <form className="space-y-6" onSubmit={handleSubmit}>
-          {/* Title Input */}
           <Input
             name="title"
             type="text"
             id="title"
             label="Title"
-            required={true}
-            value={bookData?.title}
-            onChange={handleBookDataChange}
+            value={bookData?.title || ""}
+            onChange={handleBookChange}
           />
-          {/* Author Input */}
           <Input
             name="author"
             type="text"
             id="author"
             label="Author"
-            required={true}
-            value={bookData?.author}
-            onChange={handleBookDataChange}
+            value={bookData?.author || ""}
+            onChange={handleBookChange}
           />
-          {/* Quantity Input */}
           <Input
             name="quantity"
             type="number"
             id="quantity"
             label="Quantity"
-            value={bookData?.quantity}
-            onChange={handleBookDataChange}
+            value={bookData?.quantity || ""}
+            onChange={handleBookChange}
           />
-          {/* Book Image Input */}
-           <div>
-            <label htmlFor="book_img" className="text-gray-700 text-sm font-bold">
-              Book Image:
+          <div>
+            <label
+              htmlFor="book_img"
+              className="block text-sm font-medium text-gray-700"
+            >
+              <Image className="inline-block mr-2 text-gray-500" />
+              Book Image
             </label>
             <input
               type="file"
               id="book_img"
               name="book_img"
               accept="image/*"
-              className="mt-2 w-full p-2 border border-gray-300 rounded-md"
-              onChange={handleBookDataChange}
+              className="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
+              onChange={handleBookChange}
             />
-            {base64IMG || bookData?.book_img ? (
+            {(base64IMG || bookData?.book_img) && (
               <img
                 src={(base64IMG as string) || bookData?.book_img}
-                alt="Book Preview"
-                className="mt-2 w-32 h-32 object-cover rounded-md"
+                alt="Preview"
+                className="mt-4 w-32 h-32 object-cover rounded-md mx-auto"
               />
-            ) : null}
-           </div>
-          {/* Availability Checkbox */}
+            )}
+          </div>
           <div className="flex items-center">
             <label
               htmlFor="availability"
@@ -167,26 +174,20 @@ const AddBook = () => {
               type="checkbox"
               id="availability"
               name="availability"
-              className="mx-3 w-5 h-5"
-              checked={bookData?.availability}
-              onChange={handleBookDataChange}
+              className="mx-3 w-5 h-5 accent-indigo-700"
+              checked={bookData?.availability || false}
+              onChange={handleBookChange}
             />
           </div>
-          {/* Submit Button */}
+          {errorMessage && (
+            <p className="text-red-500 text-lg text-center">{errorMessage}</p>
+          )}
           <Button
-            label={id ? "Edit Book" : "Add Book"}
+            label={id ? "Update Book" : "Add Book"}
             type="submit"
-            bgColor="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all"
+            bgColor="w-full bg-indigo-700 hover:bg-indigo-800 text-white py-2 rounded-md"
           />
         </form>
-        <div className="mt-4 text-center">
-          <Button
-            label="Back to Books"
-            type="button"
-            onClick={() => navigate("/book")}
-            bgColor="bg-gray-500 hover:bg-gray-600"
-          />
-        </div>
       </div>
     </div>
   );
