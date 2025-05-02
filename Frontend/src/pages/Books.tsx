@@ -94,7 +94,7 @@ const Books = () => {
       <div className="flex-grow overflow-auto">
         <div className="h-full">
           <table className="w-full table-fixed bg-white border-collapse border border-gray-300">
-            <thead className="sticky top-0 bg-gray-200">
+            <thead className="sticky top-0 bg-gray-200 bg-gradient-to-1 from-indigo-700 to-purple-600">
               <tr className="bg-gray-100 text-gray-700">
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
                   Title
