@@ -135,15 +135,26 @@ const AddBook = () => {
             onChange={handleBookDataChange}
           />
           {/* Book Image Input */}
-          <Input
-            name="book_img"
-            type="text"
-            id="book_img"
-            label="Book Image"
-            required={false}
-            value={bookData?.book_img}
-            onChange={handleBookDataChange}
-          />
+           <div>
+            <label htmlFor="book_img" className="text-gray-700 text-sm font-bold">
+              Book Image:
+            </label>
+            <input
+              type="file"
+              id="book_img"
+              name="book_img"
+              accept="image/*"
+              className="mt-2 w-full p-2 border border-gray-300 rounded-md"
+              onChange={handleBookDataChange}
+            />
+            {base64IMG || bookData?.book_img ? (
+              <img
+                src={(base64IMG as string) || bookData?.book_img}
+                alt="Book Preview"
+                className="mt-2 w-32 h-32 object-cover rounded-md"
+              />
+            ) : null}
+           </div>
           {/* Availability Checkbox */}
           <div className="flex items-center">
             <label
