@@ -8,6 +8,7 @@ import { Book } from "./Books";
 
 const AddBook = () => {
   const navigate = useNavigate();
+  const [base64IMG, setBase64IMG] = useState<string | ArrayBuffer | null>(null);
   const [bookData, setBookData] = useState<Book>({
     title: "",
     author: "",
@@ -16,6 +17,14 @@ const AddBook = () => {
     availability: false,
   });
   const { id } = useParams();
+  const convertToBase64 = (selectedfile: File) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedfile);
+    reader.onloadend = () => {
+      console.log("Base64 Image: ", reader.result);
+      setBase64IMG(reader.result);
+    };
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
