@@ -74,25 +74,28 @@ const AddBook = () => {
     try {
       const response = await axiosInstance(`/books/${id}`); // Adjust the endpoint as needed
       setBookData({ ...response.data, availability: true });
+      setBase64IMG(response.data.book_img);
     } catch (error) {
       console.error("Error fetching books:", error);
     }
   };
 
   useEffect(() => {
-    fetchBookFromId();
+    if (id) {
+      fetchBookFromId();
+    }
   }, [id]);
 
   const handleBookDataChange = (e: any) => {
-    const { name, value, checked } = e.target;
-    setBookData((prevData) => {
-      const updatedData = {
+    const { name, value, checked,type,files } = e.target;
+    if(name==="book_img" && files && files[0]) {
+      convertToBase64(files[0]);
+    } else{
+      setBookData((prevData) => ({
         ...prevData,
-        [name]: name === "availability" ? checked : value,
-      };
-      console.log(updatedData);
-      return updatedData;
-    });
+        [name]: type === "checkbox" ? checked : value,
+      }));
+    }
   };
 
   return (
