@@ -103,9 +103,7 @@ const AddBook = () => {
 
   return (
     <div className="flex justify-center items-start py-4">
-      {/* Fixed width container with overflow handling */}
       <div className="bg-white shadow-lg rounded-lg p-6 w-[500px] overflow-y-auto">
-        {/* Header section */}
         <div className="mb-6">
           <div
             className="font-bold flex items-center cursor-pointer text-gray-700 mb-3"
@@ -119,9 +117,7 @@ const AddBook = () => {
           </h1>
         </div>
 
-        {/* Form with flex column layout and gap */}
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-          {/* Input fields section */}
           <div className="space-y-5">
             <Input
               name="title"
@@ -148,7 +144,6 @@ const AddBook = () => {
               onChange={handleBookChange}
             />
           </div>
-          {/* Image upload section with fixed height */}
           <div className="mb-2">
             <label
               htmlFor="book_img"
@@ -168,7 +163,6 @@ const AddBook = () => {
                 onChange={handleBookChange}
               />
 
-              {/* Small inline image preview */}
               {base64IMG || bookData?.book_img ? (
                 <img
                   src={(base64IMG as string) || bookData?.book_img}
@@ -181,7 +175,6 @@ const AddBook = () => {
             </div>
           </div>
 
-          {/* Availability checkbox */}
           <div className="flex items-center">
             <label
               htmlFor="availability"
@@ -203,7 +196,6 @@ const AddBook = () => {
               <p className="text-red-500 text-sm text-center">{errorMessage}</p>
             )}
           </div>
-          {/* Button section */}
           <div className="sticky bottom-0  py-3 px-6  rounded-b-md text-center z-10">
             <Button
               label={id ? "Update Book" : "Add Book"}
