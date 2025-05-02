@@ -49,6 +49,15 @@ const Books = () => {
       });
       setIsModelOpen(false);
     } catch (error) {
+      toast.error("Error deleting book!",{
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       console.error("Error deleting book:", error);
     }
   };
