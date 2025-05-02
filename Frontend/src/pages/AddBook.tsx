@@ -102,67 +102,86 @@ const AddBook = () => {
   };
 
   return (
-    <div className="flex justify-center mt-1">
-      <div className="bg-white shadow-lg rounded-lg p-5 w-[500px] max-h-[90vh]">
-        <h1
-          className="font-bold text-center mb-5 flex items-center cursor-pointer text-gray-700"
-          onClick={() => navigate("/book")}
-        >
-          <ArrowLeft />
-          <span className="px-2">Back to books</span>
-        </h1>
-        <h1 className="text-2xl font-bold text-center text-indigo-700">
-          {id ? "Edit Book" : "Add New Book"}
-        </h1>
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <Input
-            name="title"
-            type="text"
-            id="title"
-            label="Title"
-            value={bookData?.title || ""}
-            onChange={handleBookChange}
-          />
-          <Input
-            name="author"
-            type="text"
-            id="author"
-            label="Author"
-            value={bookData?.author || ""}
-            onChange={handleBookChange}
-          />
-          <Input
-            name="quantity"
-            type="number"
-            id="quantity"
-            label="Quantity"
-            value={bookData?.quantity || ""}
-            onChange={handleBookChange}
-          />
-          <div>
+    <div className="flex justify-center items-start py-4">
+      {/* Fixed width container with overflow handling */}
+      <div className="bg-white shadow-lg rounded-lg p-6 w-[500px] overflow-y-auto">
+        {/* Header section */}
+        <div className="mb-6">
+          <div
+            className="font-bold flex items-center cursor-pointer text-gray-700 mb-3"
+            onClick={() => navigate("/book")}
+          >
+            <ArrowLeft size={18} />
+            <span className="px-2">Back to books</span>
+          </div>
+          <h1 className="text-2xl font-bold text-center text-indigo-700">
+            {id ? "Edit Book" : "Add New Book"}
+          </h1>
+        </div>
+
+        {/* Form with flex column layout and gap */}
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+          {/* Input fields section */}
+          <div className="space-y-5">
+            <Input
+              name="title"
+              type="text"
+              id="title"
+              label="Title"
+              value={bookData?.title || ""}
+              onChange={handleBookChange}
+            />
+            <Input
+              name="author"
+              type="text"
+              id="author"
+              label="Author"
+              value={bookData?.author || ""}
+              onChange={handleBookChange}
+            />
+            <Input
+              name="quantity"
+              type="number"
+              id="quantity"
+              label="Quantity"
+              value={bookData?.quantity || ""}
+              onChange={handleBookChange}
+            />
+          </div>
+          {/* Image upload section with fixed height */}
+          <div className="mb-2">
             <label
               htmlFor="book_img"
               className="block text-sm font-medium text-gray-700"
             >
-              <Image className="inline-block mr-2 text-gray-500" />
+              <Image className="inline-block mr-2 text-gray-500" size={16} />
               Book Image
             </label>
-            <input
-              type="file"
-              id="book_img"
-              name="book_img"
-              accept="image/*"
-              className="mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none"
-              onChange={handleBookChange}
-            />
-            {(base64IMG || bookData?.book_img) && (
-              <img
-                src={(base64IMG as string) || bookData?.book_img}
-                alt="Preview"
-                className="mt-4 w-32 h-32 object-cover rounded-md mx-auto"
+
+            <div className="flex items-center gap-4 mt-1">
+              <input
+                type="file"
+                id="book_img"
+                name="book_img"
+                accept="image/*"
+                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none p-2"
+                onChange={handleBookChange}
               />
-            )}
+
+              {/* Small inline image preview */}
+              {base64IMG || bookData?.book_img ? (
+                <img
+                  src={(base64IMG as string) || bookData?.book_img}
+                  alt="Preview"
+                  className="h-12 w-12 object-cover rounded-md"
+                />
+              ) : (
+                <div className="text-gray-400 text-xs">No image</div>
+              )}
+            </div>
           </div>
+
+          {/* Availability checkbox */}
           <div className="flex items-center">
             <label
               htmlFor="availability"
@@ -179,14 +198,19 @@ const AddBook = () => {
               onChange={handleBookChange}
             />
           </div>
-          {errorMessage && (
-            <p className="text-red-500 text-lg text-center">{errorMessage}</p>
-          )}
-          <Button
-            label={id ? "Update Book" : "Add Book"}
-            type="submit"
-            bgColor="w-full bg-indigo-700 hover:bg-indigo-800 text-white py-2 rounded-md"
-          />
+          <div className="h-6">
+            {errorMessage && (
+              <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+            )}
+          </div>
+          {/* Button section */}
+          <div className="sticky bottom-0  py-3 px-6  rounded-b-md text-center z-10">
+            <Button
+              label={id ? "Update Book" : "Add Book"}
+              type="submit"
+              bgColor="bg-indigo-700 hover:bg-indigo-800"
+            />
+          </div>
         </form>
       </div>
     </div>
