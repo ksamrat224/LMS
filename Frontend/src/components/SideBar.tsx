@@ -8,7 +8,7 @@ import { ThemeContext } from "../context/themeContext";
 
 const SideBar = () => {
   const navigate = useNavigate();
-  const {theme,setTheme} = useContext(ThemeContext); // Assuming you have a ThemeContext to manage theme state
+  const {theme,toggleTheme} = useContext(ThemeContext); // Assuming you have a ThemeContext to manage theme state
 
   const handleLogout = () => {
     // Display the toast notification
@@ -37,11 +37,7 @@ const SideBar = () => {
         {/* Title and Logo */}
         <div className="p-6 border-b border-white/20 flex items-center justify-between">
           <h1 className="text-2xl font-extrabold tracking-wide">LMS APP</h1>
-        {theme==="light"?(<SunIcon  onClick={()=>{
-          setTheme("dark");
-          console.log("theme:dark");}} className="text-yellow-400 font-extrabold cursor-pointer " />):(<MoonIcon onClick={()=>{
-            setTheme("light");
-            console.log("theme:light");}} className=" text-white cursor-pointer " />)}
+        {theme==="light"?(<SunIcon  onClick={toggleTheme} className="text-yellow-400 font-extrabold cursor-pointer " />):(<MoonIcon onClick={toggleTheme} className=" text-white cursor-pointer " />)}
         </div>
         {/* Menu Items */}
         <nav>
