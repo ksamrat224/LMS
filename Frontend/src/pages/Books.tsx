@@ -76,7 +76,6 @@ const Books = () => {
     <div className="flex flex-col h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white">
       {/* Header */}
       <header className="py-6 text-center bg-gradient-to-r from-purple-700 to-blue-700 shadow-lg">
-        <h1 className="text-4xl font-extrabold tracking-wide">Library Books</h1>
         <p className="text-lg mt-2">
           Explore the collection of books in our library
         </p>
