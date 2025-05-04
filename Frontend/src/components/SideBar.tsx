@@ -37,11 +37,11 @@ const SideBar = () => {
         {/* Title and Logo */}
         <div className="p-6 border-b border-white/20 flex items-center justify-between">
           <h1 className="text-2xl font-extrabold tracking-wide">LMS APP</h1>
-        {theme==="light"?(<SunIcon onClick={()=>{
+        {theme==="light"?(<SunIcon  onClick={()=>{
           setTheme("dark");
-          console.log("theme:dark");}} className=" text-white " />):(<MoonIcon onClick={()=>{
+          console.log("theme:dark");}} className="text-yellow-400 font-extrabold cursor-pointer " />):(<MoonIcon onClick={()=>{
             setTheme("light");
-            console.log("theme:light");}} className=" text-white " />)}
+            console.log("theme:light");}} className=" text-white cursor-pointer " />)}
         </div>
         {/* Menu Items */}
         <nav>
