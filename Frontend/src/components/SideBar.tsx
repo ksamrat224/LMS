@@ -2,9 +2,13 @@ import { useNavigate } from "react-router";
 import Button from "./Button";
 import NavItem from "./NavItem";
 import { Bounce, toast } from "react-toastify";
+import { MoonIcon, SunIcon } from "lucide-react";
+import { useContext } from "react";
+import { ThemeContext } from "../context/themeContext";
 
 const SideBar = () => {
   const navigate = useNavigate();
+  const {theme,setTheme} = useContext(ThemeContext); // Assuming you have a ThemeContext to manage theme state
 
   const handleLogout = () => {
     // Display the toast notification
@@ -31,8 +35,13 @@ const SideBar = () => {
       {/* Top Section: Title and Menu Items */}
       <div>
         {/* Title and Logo */}
-        <div className="p-6 border-b border-white/20">
+        <div className="p-6 border-b border-white/20 flex items-center justify-between">
           <h1 className="text-2xl font-extrabold tracking-wide">LMS APP</h1>
+        {theme==="light"?(<SunIcon onClick={()=>{
+          setTheme("dark");
+          console.log("theme:dark");}} className=" text-white " />):(<MoonIcon onClick={()=>{
+            setTheme("light");
+            console.log("theme:light");}} className=" text-white " />)}
         </div>
         {/* Menu Items */}
         <nav>

@@ -4,16 +4,19 @@ import React, { createContext, useState } from "react";
 //Context Provider-stores and manipulates context data
 //Context Consumer-uses context data in components
 interface ThemeContextValues{
-  theme?: string;
+  theme: string;
+  setTheme:(value:string)=>void;
+
 }
 const ThemeContext = createContext<ThemeContextValues>({
   theme: "light",
+  setTheme: () => {}, // Default function to avoid errors
 });
 
 const ThemeProvider = ({children}:{children:React.ReactElement}) =>{
     const[theme, setTheme] = useState("light");
     return(
-        <ThemeContext.Provider value={{ theme }}>
+        <ThemeContext.Provider value={{ theme,setTheme }}>
             {children}
         </ThemeContext.Provider>
     );
