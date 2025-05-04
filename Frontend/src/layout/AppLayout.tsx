@@ -1,12 +1,11 @@
 import { Outlet } from "react-router";
 import SideBar from "../components/SideBar";
-import { useContext } from "react";
-import { ThemeContext } from "../context/themeContext";
+import {  useTheme } from "../context/themeContext";
 
 
 
 const AppLayout = () => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   console.log({theme}); // Assuming you have a ThemeContext to manage theme state
   return (
     <div className="w-screen h-screen flex">
