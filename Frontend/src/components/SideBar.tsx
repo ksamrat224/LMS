@@ -3,12 +3,12 @@ import Button from "./Button";
 import NavItem from "./NavItem";
 import { Bounce, toast } from "react-toastify";
 import { MoonIcon, SunIcon } from "lucide-react";
-import { useContext } from "react";
-import { ThemeContext } from "../context/themeContext";
+import {  useTheme } from "../context/themeContext";
+
 
 const SideBar = () => {
   const navigate = useNavigate();
-  const {theme,toggleTheme} = useContext(ThemeContext); // Assuming you have a ThemeContext to manage theme state
+  const {theme,toggleTheme} = useTheme(); // Assuming you have a ThemeContext to manage theme state
 
   const handleLogout = () => {
     // Display the toast notification

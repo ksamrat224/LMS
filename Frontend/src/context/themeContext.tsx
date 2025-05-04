@@ -1,4 +1,9 @@
-import React, { createContext, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 //contextAPI-for global data management
 //ThemeContext-for implementing dark/light mode toggle across the app
 //Context Provider-stores and manipulates context data
@@ -17,11 +22,16 @@ const ThemeContext = createContext<ThemeContextValues>({
 const ThemeProvider = ({ children }: { children: React.ReactElement }) => {
   const [theme, setTheme] = useState<Theme>("light");
   const toggleTheme = () => {
-    setTheme(prevTheme=> (prevTheme==="light"?"dark":"light"));
-    }
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
   const value = useMemo(() => ({ theme, toggleTheme }), [theme]);
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
-export { ThemeContext, ThemeProvider };
+//custom hook that consumes the ThemeContext and returns the context value
+const useTheme = () => {
+  const context = useContext(ThemeContext);
+   return context;
+};
+export { useTheme, ThemeProvider };
