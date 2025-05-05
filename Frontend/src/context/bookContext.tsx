@@ -8,7 +8,14 @@ import React, {
 //ThemeContext-for implementing dark/light mode toggle across the app
 //Context Provider-stores and manipulates context data
 //Context Consumer-uses context data in components
-
+interface Book {
+    id: number;
+    title: string;
+    author: string;
+    quantity: number;
+    availability: boolean;
+    image: string;
+}
 
 interface BookContextValues {
   bookData:Book[];
