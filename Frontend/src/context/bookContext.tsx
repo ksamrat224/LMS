@@ -1,9 +1,12 @@
 import React, {
   createContext,
+  use,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
+import { axiosInstance } from "../utils/axiosInterceptor";
 //contextAPI-for global data management
 //ThemeContext-for implementing dark/light mode toggle across the app
 //Context Provider-stores and manipulates context data
@@ -25,9 +28,21 @@ const BookContext = createContext<BookContextValues>({
 });
 
 const BookProvider = ({ children }: { children: React.ReactElement }) => {
-  const [Book, setBook] = useState<Book[]>([]);
+  const [bookData, setBookdata] = useState<Book[]>([]);
+  const fetchBooks = async () => {
+    try {
+        const response = await axiosInstance(`/books`);
+        setBookdata(response.data);
+    } catch (error) {
+        console.error("Error fetching books:", error);
+    }
+  };
+  useEffect(() => {
+    fetchBooks();
+  }, []);
 
-  const value = useMemo(() => ({ Book, toggleBook }), [Book]);
+
+  const value = useMemo(() => ({ bookData}), [bookData]);
   return (
     <BookContext.Provider value={value}>{children}</BookContext.Provider>
   );
