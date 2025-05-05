@@ -25,10 +25,8 @@ const BookContext = createContext<BookContextValues>({
 });
 
 const BookProvider = ({ children }: { children: React.ReactElement }) => {
-  const [Book, setBook] = useState<Book>("light");
-  const toggleBook = () => {
-    setBook((prevBook) => (prevBook === "light" ? "dark" : "light"));
-  };
+  const [Book, setBook] = useState<Book[]>([]);
+
   const value = useMemo(() => ({ Book, toggleBook }), [Book]);
   return (
     <BookContext.Provider value={value}>{children}</BookContext.Provider>
