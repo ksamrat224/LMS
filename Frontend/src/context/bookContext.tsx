@@ -28,11 +28,11 @@ const BookContext = createContext<BookContextValues>({
 });
 
 const BookProvider = ({ children }: { children: React.ReactElement }) => {
-  const [bookData, setBookdata] = useState<Book[]>([]);
+  const [bookData, setBookData] = useState<Book[]>([]);
   const fetchBooks = async () => {
     try {
         const response = await axiosInstance(`/books`);
-        setBookdata(response.data);
+        setBookData(response.data);
     } catch (error) {
         console.error("Error fetching books:", error);
     }
