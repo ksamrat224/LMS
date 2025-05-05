@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { axiosInstance } from "../utils/axiosInterceptor";
+import { toast } from "react-toastify";
 //contextAPI-for global data management
 //ThemeContext-for implementing dark/light mode toggle across the app
 //Context Provider-stores and manipulates context data
@@ -37,12 +38,29 @@ const BookProvider = ({ children }: { children: React.ReactElement }) => {
         console.error("Error fetching books:", error);
     }
   };
+  const onDelete = async (id: number) => {
+    try {
+        await axiosInstance.delete(`/books/${id}`); 
+        const newData =[...bookData].filter((book) => book.id !== id);
+        setBookData(newData);
+        toast.success("Book deleted successfully!",{
+          position: "top-right",
+            autoClose: 1000,    });
+    } catch (error:any) {
+        toast.error(error?.response?.data?.message || "Error deleting book!",{
+          position: "top-right",
+            autoClose: 1000,    });
+        console.error("Error deleting book:", error);
+    }
+  };
+
+
   useEffect(() => {
     fetchBooks();
   }, []);
 
 
-  const value = useMemo(() => ({ bookData}), [bookData]);
+  const value = useMemo(() => ({ bookData,onDelete}), [bookData]);
   return (
     <BookContext.Provider value={value}>{children}</BookContext.Provider>
   );
