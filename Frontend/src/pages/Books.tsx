@@ -22,7 +22,7 @@ const Books = () => {
   const handleDelete = async () => {
     if (selectedBookId) {
       onDelete(selectedBookId);
-    } 
+    }
     setIsModelOpen(false);
   };
   const openModel = (id: number) => {

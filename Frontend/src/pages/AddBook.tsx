@@ -6,18 +6,14 @@ import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Book } from "./Books";
 import { Image, ArrowLeft } from "lucide-react";
+import { useBook } from "../context/bookContext";
 
 const AddBook = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [base64IMG, setBase64IMG] = useState<string | ArrayBuffer | null>(null);
-  const [bookData, setBookData] = useState<Book>({
-    title: "",
-    author: "",
-    quantity: 0,
-    book_img: "",
-    availability: false,
-  });
+  const [bookData, setBookData] = useState<Book>();
+  const {updateBookData} = useBook();
   const [errorMessage, setErrorMessage] = useState("");
 
   const convertToBase64 = (selectedFile: File) => {
@@ -56,6 +52,7 @@ const AddBook = () => {
         draggable: true,
         progress: undefined,
       });
+      updateBookData(parsedFormValues as Book);
       navigate("/book");
     } catch (err: any) {
       setErrorMessage(

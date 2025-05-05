@@ -12,21 +12,23 @@ import { toast } from "react-toastify";
 //Context Provider-stores and manipulates context data
 //Context Consumer-uses context data in components
 interface Book {
-  id: number;
+  id?: number;
   title: string;
   author: string;
   quantity: number;
-  availability: boolean;
-  image: string;
+  availability?: boolean;
+  book_img?: string;
 }
 
 interface BookContextValues {
   bookData: Book[];
   onDelete: (id: number) => void;
+  updateBookData:(updatedBook:Book)=>void;
 }
 const BookContext = createContext<BookContextValues>({
   bookData: [],
   onDelete: () => {},
+  updateBookData: () => {},
 });
 
 const BookProvider = ({ children }: { children: React.ReactElement }) => {
@@ -39,6 +41,9 @@ const BookProvider = ({ children }: { children: React.ReactElement }) => {
     } catch (error) {
       console.error("Error fetching books:", error);
     }
+  };
+  const updateBookData=(updatedBook:Book)=>{
+    setBookData([...bookData, updatedBook]);
   };
   const onDelete = async (id: number) => {
     try {
@@ -62,7 +67,7 @@ const BookProvider = ({ children }: { children: React.ReactElement }) => {
     fetchBooks();
   }, []);
 
-  const value = useMemo(() => ({ bookData, onDelete }), [bookData]);
+  const value = useMemo(() => ({ bookData, onDelete ,updateBookData}), [bookData]);
   return <BookContext.Provider value={value}>{children}</BookContext.Provider>;
 };
 //custom hook that consumes the ThemeContext and returns the context value
