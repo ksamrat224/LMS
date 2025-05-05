@@ -1,10 +1,8 @@
-import {  useState } from "react";
-import { axiosInstance } from "../utils/axiosInterceptor";
+import { useState } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PencilIcon, TrashIcon } from "lucide-react";
 import Modal from "../components/Modal";
-import { toast } from "react-toastify";
 import { useBook } from "../context/bookContext";
 
 export interface Book {
@@ -17,39 +15,17 @@ export interface Book {
 }
 
 const Books = () => {
-  const{bookData} = useBook();
+  const { bookData, onDelete } = useBook();
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
 
- 
   const handleDelete = async () => {
-    try {
-      await axiosInstance.delete(`/books/${selectedBookId}`); // Adjust the endpoint as needed
-      setData((prevData) => prevData.filter((book) => book.id !== selectedBookId));
-      toast.success("Book deleted successfully!",{
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      setIsModelOpen(false);
-    } catch (error) {
-      toast.error("Error deleting book!",{
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-      console.error("Error deleting book:", error);
-    }
+    if (selectedBookId) {
+      onDelete(selectedBookId);
+    } 
+    setIsModelOpen(false);
   };
-  const openModel= (id: number) => {
+  const openModel = (id: number) => {
     setIsModelOpen(true);
     setSelectedBookId(id);
   };
@@ -104,7 +80,7 @@ const Books = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((book: any, index: number) => (
+              {bookData.map((book: any, index: number) => (
                 <tr
                   key={book.id}
                   className={`h-20 ${
@@ -160,10 +136,11 @@ const Books = () => {
           </table>
         </div>
       </div>
-        <Modal
-         isModelOpen={isModelOpen}
-         onClose={closeModel}
-         onConfirm={handleDelete}/>
+      <Modal
+        isModelOpen={isModelOpen}
+        onClose={closeModel}
+        onConfirm={handleDelete}
+      />
     </div>
   );
 };
