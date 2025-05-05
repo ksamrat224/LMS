@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { axiosInstance } from "../utils/axiosInterceptor";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PencilIcon, TrashIcon } from "lucide-react";
 import Modal from "../components/Modal";
 import { toast } from "react-toastify";
+import { useBook } from "../context/bookContext";
 
 export interface Book {
   title?: string;
@@ -16,24 +17,11 @@ export interface Book {
 }
 
 const Books = () => {
-  const [data, setData] = useState<Book[]>([]);
+  const{bookData} = useBook();
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
 
-  const fetchBooks = async () => {
-    try {
-      const response = await axiosInstance("/books"); // Adjust the endpoint as needed
-      console.log(response.data);
-      setData(response.data);
-    } catch (error) {
-      console.error("Error fetching books:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchBooks();
-  }, []);
-
+ 
   const handleDelete = async () => {
     try {
       await axiosInstance.delete(`/books/${selectedBookId}`); // Adjust the endpoint as needed
