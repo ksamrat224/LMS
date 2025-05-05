@@ -15,7 +15,7 @@ createRoot(document.getElementById("root")!).render(
           <App />
         </BookProvider>
       </ThemeProvider>
-      <ToastContainer />
+      <ToastContainer autoClose={1000} pauseOnHover={true} />
     </BrowserRouter>
   </StrictMode>
 );
