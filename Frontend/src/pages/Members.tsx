@@ -45,7 +45,7 @@ const Members = () => {
           <Button
             label="Add Member"
             type="button"
-            onClick={() => navigate("/add-book")}
+            onClick={() => navigate("/add-member")}
             bgColor="bg-green-600 hover:bg-green-700"
           />
         </div>
