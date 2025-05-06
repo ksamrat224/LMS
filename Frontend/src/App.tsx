@@ -9,6 +9,7 @@ import AddBook from "./pages/AddBook";
 import Members from "./pages/Members";
 import AddMember from "./pages/AddMember";
 import Transactions from "./pages/Transactions";
+import AddTransaction from "./pages/AddTransaction";
 
 const ProtectedRoutes = () => {
   const token = localStorage.getItem("token");
@@ -32,11 +33,14 @@ const App = () => {
         <Route path="/add-book" element={<AddBook />} />
         <Route path="/edit-book/:id" element={<AddBook />} />
         <Route path="/delete-book/:id" element={<AddBook />} />
-        <Route path="/member" element={<Members/>} />
+        <Route path="/member" element={<Members />} />
         <Route path="/add-member" element={<AddMember />} />
         <Route path="/edit-member/:id" element={<AddMember />} />
         <Route path="/delete-member/:id" element={<AddMember />} />
-        <Route path="/transaction" element={<Transactions/>} />
+        <Route path="/transaction" element={<Transactions />} />
+        <Route path="/add-transaction" element={<AddTransaction />} />
+        <Route path="/edit-transaction/:id" element={<AddTransaction />} />
+        <Route path="/delete-transaction/:id" element={<AddTransaction />} />
       </Route>
       {/* Public routes */}
       <Route path="/register" element={<Register />} />
