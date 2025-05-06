@@ -31,6 +31,9 @@ const App = () => {
         <Route path="/edit-book/:id" element={<AddBook />} />
         <Route path="/delete-book/:id" element={<AddBook />} />
         <Route path="/member" element={<Members/>} />
+        <Route path="/add-member" element={<AddBook />} />
+        <Route path="/edit-member/:id" element={<AddBook />} />
+        <Route path="/delete-member/:id" element={<AddBook />} />
         <Route path="/transaction" element={<div>Transaction Page</div>} />
       </Route>
       {/* Public routes */}

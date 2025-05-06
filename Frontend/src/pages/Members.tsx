@@ -100,7 +100,7 @@ const Members = () => {
                     <div className="flex space-x-4">
                       <PencilIcon
                         className="text-blue-600 cursor-pointer"
-                        onClick={() => navigate(`/edit-book/${member.id}`)}
+                        onClick={() => navigate(`/edit-member/${member.id}`)}
                       />
                       <TrashIcon
                         className="text-red-600 cursor-pointer"
