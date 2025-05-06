@@ -7,6 +7,7 @@ import { Navigate } from "react-router";
 import Books from "./pages/Books";
 import AddBook from "./pages/AddBook";
 import Members from "./pages/Members";
+import AddMember from "./pages/AddMember";
 
 const ProtectedRoutes = () => {
   const token = localStorage.getItem("token");
@@ -31,9 +32,9 @@ const App = () => {
         <Route path="/edit-book/:id" element={<AddBook />} />
         <Route path="/delete-book/:id" element={<AddBook />} />
         <Route path="/member" element={<Members/>} />
-        <Route path="/add-member" element={<AddBook />} />
-        <Route path="/edit-member/:id" element={<AddBook />} />
-        <Route path="/delete-member/:id" element={<AddBook />} />
+        <Route path="/add-member" element={<AddMember />} />
+        <Route path="/edit-member/:id" element={<AddMember />} />
+        <Route path="/delete-member/:id" element={<AddMember />} />
         <Route path="/transaction" element={<div>Transaction Page</div>} />
       </Route>
       {/* Public routes */}
