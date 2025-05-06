@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { PencilIcon, TrashIcon } from "lucide-react";
 import Modal from "../components/Modal";
 import { useMember } from "../context/memberContext";
-export interface Book {
+export interface Member {
   name?: string;
   address?: string;
   email?: string;
