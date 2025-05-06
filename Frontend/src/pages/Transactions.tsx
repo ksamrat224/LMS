@@ -20,21 +20,21 @@ export interface Transaction {
 const Transactions = () => {
   const { memberData, onDelete } = useMember();
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
+  const [selectedTransactionId, setSelectedTransactionId] = useState<number | null>(null);
 
   const handleDelete = async () => {
-    if (selectedMemberId) {
-      onDelete(selectedMemberId);
+    if (selectedTransactionId) {
+      onDelete(selectedTransactionId);
     }
     setIsModelOpen(false);
   };
   const openModel = (id: number) => {
     setIsModelOpen(true);
-    setSelectedMemberId(id);
+    setSelectedTransactionId(id);
   };
   const closeModel = () => {
     setIsModelOpen(false);
-    setSelectedMemberId(null);
+    setSelectedTransactionId(null);
   };
 
   const navigate = useNavigate();
@@ -44,13 +44,13 @@ const Transactions = () => {
       {/* Header */}
       <header className="py-6 text-center bg-gradient-to-r from-purple-700 to-blue-700 shadow-lg">
         <p className="text-lg mt-2">
-          Members in our library
+          Transactions in our library
         </p>
         <div className="mt-4 flex justify-end pr-6 space-x-4">
           <Button
-            label="Add Member"
+            label="Add Transaction"
             type="button"
-            onClick={() => navigate("/add-member")}
+            onClick={() => navigate("/add-transaction")}
             bgColor="bg-green-600 hover:bg-green-700"
           />
         </div>
@@ -63,16 +63,16 @@ const Transactions = () => {
             <thead className="sticky top-0 bg-gray-200 bg-gradient-to-1 from-indigo-700 to-purple-600">
               <tr className="bg-gray-100 text-gray-700 ">
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
-                  Name
+                  Book
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
-                  Address
+                  Member
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
-                  Email
+                  Type
                 </th>
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
-                  Mobile
+                  Date
                 </th>
                
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
@@ -81,35 +81,35 @@ const Transactions = () => {
               </tr>
             </thead>
             <tbody>
-              {memberData.map((member: any, index: number) => (
+              {memberData.map((transaction: any, index: number) => (
                 <tr
-                  key={member.id}
+                  key={transaction.id}
                   className={`h-20 ${
                     index % 2 === 0 ? "bg-gray-50" : "bg-white"
                   } hover:bg-blue-100 transition duration-200`}
                 >
                   <td className="px-6 py-4 text-gray-900 border border-gray-300 font-bold truncate">
-                    {member.name}
+                    {transaction.book_id}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border border-gray-300 truncate">
-                    {member.address}
+                    {transaction.member_id}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border border-gray-300 truncate">
-                    {member.email}
+                    {transaction.type}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border border-gray-300">
-                    {member.mobile}
+                    {transaction.transaction_date}
                   </td>
                   
                   <td className="px-6 py-4 text-gray-900 border border-gray-300">
                     <div className="flex space-x-4">
                       <PencilIcon
                         className="text-blue-600 cursor-pointer"
-                        onClick={() => navigate(`/edit-member/${member.id}`)}
+                        onClick={() => navigate(`/edit-transaction/${transaction.id}`)}
                       />
                       <TrashIcon
                         className="text-red-600 cursor-pointer"
-                        onClick={() => openModel(member.id as number)}
+                        onClick={() => openModel(transaction.id as number)}
                       />
                     </div>
                   </td>
