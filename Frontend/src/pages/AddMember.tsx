@@ -4,19 +4,16 @@ import Input from "../components/Input";
 import { axiosInstance } from "../utils/axiosInterceptor";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { Book } from "./Books";
-import { Image, ArrowLeft } from "lucide-react";
+import {  ArrowLeft } from "lucide-react";
 import { useMember } from "../context/memberContext";
 import { Member } from "./Members";
 
-const AddBook = () => {
+const AddMember = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [memberData, setMemberData] = useState<Member>();
-  const {updateMemberData} = useMember();
+  const { updateMemberData } = useMember();
   const [errorMessage, setErrorMessage] = useState("");
-
- 
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,10 +69,12 @@ const AddBook = () => {
     fetchMemberFromId();
   }, [id]);
 
-  const handleBookChange = (e: any) => {
-    const {  } = e.target;
-
-    
+  const handleMemberChange = (e: any) => {
+    const { name, value } = e.target;
+    setMemberData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -97,83 +96,46 @@ const AddBook = () => {
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
           <div className="space-y-5">
             <Input
-              name="title"
+              name="name"
               type="text"
-              id="title"
-              label="Title"
-              value={memberData?.title || ""}
-              onChange={handleBookChange}
+              id="name"
+              label="Name"
+              value={memberData?.name || ""}
+              onChange={handleMemberChange}
             />
             <Input
-              name="author"
+              name="address"
               type="text"
-              id="author"
-              label="Author"
-              value={memberData?.author || ""}
-              onChange={handleBookChange}
+              id="address"
+              label="Address"
+              value={memberData?.address || ""}
+              onChange={handleMemberChange}
             />
             <Input
-              name="quantity"
-              type="number"
-              id="quantity"
-              label="Quantity"
-              value={memberData?.quantity || ""}
-              onChange={handleBookChange}
+              name="email"
+              type="email"
+              id="email"
+              label="Email"
+              value={memberData?.email || ""}
+              onChange={handleMemberChange}
+            />
+            <Input
+              name="mobile"
+              type="tel"
+              id="mobile"
+              label="Mobile"
+              value={memberData?.mobile || ""}
+              onChange={handleMemberChange}
             />
           </div>
-          <div className="mb-2">
-            <label
-              htmlFor="book_img"
-              className="block text-sm font-medium text-gray-700"
-            >
-              <Image className="inline-block mr-2 text-gray-500" size={16} />
-              Book Image
-            </label>
 
-            <div className="flex items-center gap-4 mt-1">
-              <input
-                type="file"
-                id="book_img"
-                name="book_img"
-                accept="image/*"
-                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer focus:outline-none p-2"
-                onChange={handleBookChange}
-              />
-
-              {base64IMG || bookData?.book_img ? (
-                <img
-                  src={(base64IMG as string) || bookData?.book_img}
-                  alt="Preview"
-                  className="h-12 w-12 object-cover rounded-md"
-                />
-              ) : (
-                <div className="text-gray-400 text-xs">No image</div>
-              )}
-            </div>
-          </div>
-
-          <div className="flex items-center">
-            <label
-              htmlFor="availability"
-              className="text-gray-700 text-sm font-bold"
-            >
-              Availability:
-            </label>
-            <input
-              type="checkbox"
-              id="availability"
-              name="availability"
-              className="mx-3 w-5 h-5 accent-indigo-700"
-              checked={memberData?.availability || false}
-              onChange={handleBookChange}
-            />
-          </div>
           <div className="h-6">
             {errorMessage && (
               <p className="text-red-500 text-sm text-center">{errorMessage}</p>
             )}
           </div>
-          <div className="sticky bottom-0  py-3 px-6  rounded-b-md text-center z-10">
+
+          <div className="sticky bottom-0 py-3 px-6 rounded-b-md text-center z-10">
             <Button
               label={id ? "Update Member" : "Add Member"}
               type="submit"
