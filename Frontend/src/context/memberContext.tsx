@@ -70,8 +70,8 @@ const MemberProvider = ({ children }: { children: React.ReactElement }) => {
   return <MemberContext.Provider value={value}>{children}</MemberContext.Provider>;
 };
 //custom hook that consumes the ThemeContext and returns the context value
-const useBook = () => {
+const useMember = () => {
   const context = useContext(MemberContext);
   return context;
 };
-export { useBook, MemberProvider };
+export { useMember, MemberProvider };
