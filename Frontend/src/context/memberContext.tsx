@@ -24,7 +24,7 @@ interface MemberContextValues {
   onDelete: (id: number) => void;
   updateMemberData:(updatedMember:Member)=>void;
 }
-const BookContext = createContext<MemberContextValues>({
+const MemberContext = createContext<MemberContextValues>({
   memberData: [],
   onDelete: () => {},
   updateMemberData: () => {},
@@ -32,23 +32,23 @@ const BookContext = createContext<MemberContextValues>({
 
 const MemberProvider = ({ children }: { children: React.ReactElement }) => {
   const [memberData, setMemberData] = useState<Member[]>([]);
-  const fetchBooks = async () => {
+  const fetchMembers = async () => {
     try {
-      const response = await axiosInstance(`/books`);
+      const response = await axiosInstance(`/members`);
       console.log("response", response.data);
       setMemberData(response.data);
     } catch (error) {
       console.error("Error fetching books:", error);
     }
   };
-  const updateBookData=(updatedBook:Member)=>{
+  const updateMemberData=(updatedBook:Member)=>{
     setMemberData([...memberData, updatedBook]);
   };
   const onDelete = async (id: number) => {
     try {
-      await axiosInstance.delete(`/books/${id}`);
-      const newData = [...bookData].filter((book) => book.id !== id);
-      setBookData(newData);
+      await axiosInstance.delete(`/members/${id}`);
+      const newData = [...memberData].filter((member) => member.id !== id);
+      setMemberData(newData);
       toast.success("Book deleted successfully!", {
         position: "top-right",
         autoClose: 1000,
@@ -63,15 +63,15 @@ const MemberProvider = ({ children }: { children: React.ReactElement }) => {
   };
 
   useEffect(() => {
-    fetchBooks();
+    fetchMembers();
   }, []);
 
-  const value = useMemo(() => ({ bookData, onDelete ,updateBookData}), [bookData]);
-  return <BookContext.Provider value={value}>{children}</BookContext.Provider>;
+  const value = useMemo(() => ({ memberData, onDelete ,updateMemberData}), [memberData]);
+  return <MemberContext.Provider value={value}>{children}</MemberContext.Provider>;
 };
 //custom hook that consumes the ThemeContext and returns the context value
 const useBook = () => {
-  const context = useContext(BookContext);
+  const context = useContext(MemberContext);
   return context;
 };
-export { useBook, BookProvider };
+export { useBook, MemberProvider };
