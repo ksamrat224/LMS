@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import { Navigate } from "react-router";
 import Books from "./pages/Books";
 import AddBook from "./pages/AddBook";
+import Members from "./pages/Members";
 
 const ProtectedRoutes = () => {
   const token = localStorage.getItem("token");
@@ -29,7 +30,7 @@ const App = () => {
         <Route path="/add-book" element={<AddBook />} />
         <Route path="/edit-book/:id" element={<AddBook />} />
         <Route path="/delete-book/:id" element={<AddBook />} />
-        <Route path="/member" element={<div>Member Page</div>} />
+        <Route path="/member" element={<Members/>} />
         <Route path="/transaction" element={<div>Transaction Page</div>} />
       </Route>
       {/* Public routes */}
