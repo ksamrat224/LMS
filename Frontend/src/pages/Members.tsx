@@ -15,21 +15,21 @@ export interface Member {
 const Members = () => {
   const { memberData, onDelete } = useMember();
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [selectedBookId, setSelectedBookId] = useState<number | null>(null);
+  const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
 
   const handleDelete = async () => {
-    if (selectedBookId) {
-      onDelete(selectedBookId);
+    if (selectedMemberId) {
+      onDelete(selectedMemberId);
     }
     setIsModelOpen(false);
   };
   const openModel = (id: number) => {
     setIsModelOpen(true);
-    setSelectedBookId(id);
+    setSelectedMemberId(id);
   };
   const closeModel = () => {
     setIsModelOpen(false);
-    setSelectedBookId(null);
+    setSelectedMemberId(null);
   };
 
   const navigate = useNavigate();
