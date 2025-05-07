@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
-import { PencilIcon, TrashIcon } from "lucide-react";
+import {  TrashIcon } from "lucide-react";
 import Modal from "../components/Modal";
 import { useMember } from "../context/memberContext";
 import { axiosInstance } from "../utils/axiosInterceptor";

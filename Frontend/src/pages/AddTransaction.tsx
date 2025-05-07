@@ -22,7 +22,12 @@ export interface Transaction {
 
 const AddTransaction = () => {
   const navigate = useNavigate();
-  const [transactionData, setTransactionData] = useState<Transaction>();
+  const [transactionData, setTransactionData] = useState<Transaction>({
+    book_id: undefined,
+    member_id: undefined,
+    transaction_date: "",
+    type: "borrow",
+  });
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
   const {bookData}=useBook();
