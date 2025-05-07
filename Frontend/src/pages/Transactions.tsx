@@ -5,7 +5,7 @@ import { PencilIcon, TrashIcon } from "lucide-react";
 import Modal from "../components/Modal";
 import { useMember } from "../context/memberContext";
 
-type TransactionType = "borrow" | "return";
+type Transaction_Type = "borrow" | "return";
 
 export interface Transaction {
   
@@ -13,7 +13,7 @@ export interface Transaction {
   book_id?: number;
   member_id?: number;
   transaction_date?: string;
-  type:TransactionType
+  type:Transaction_Type;
 
 }
 
@@ -21,6 +21,7 @@ const Transactions = () => {
   const { memberData, onDelete } = useMember();
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [selectedTransactionId, setSelectedTransactionId] = useState<number | null>(null);
+  const [transactionData, setTransactionData] = useState<Transaction[]>([]);
 
   const handleDelete = async () => {
     if (selectedTransactionId) {
@@ -81,7 +82,7 @@ const Transactions = () => {
               </tr>
             </thead>
             <tbody>
-              {memberData.map((transaction: any, index: number) => (
+              {transactionData.map((transaction: any, index: number) => (
                 <tr
                   key={transaction.id}
                   className={`h-20 ${

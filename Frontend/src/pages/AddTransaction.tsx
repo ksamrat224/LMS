@@ -5,30 +5,37 @@ import { axiosInstance } from "../utils/axiosInterceptor";
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import {  ArrowLeft } from "lucide-react";
-import { useMember } from "../context/memberContext";
-import { Member } from "./Members";
+import { useBook } from "../context/bookContext";
+import { Transaction } from "./Transactions";
 
+type Transaction_Type = "borrow" | "return";
 const AddTransaction = () => {
   const navigate = useNavigate();
+  const [transactionData, setTransactionData] = useState<Transaction>();
   const { id } = useParams();
-  const [memberData, setMemberData] = useState<Member>();
-  const { updateMemberData } = useMember();
   const [errorMessage, setErrorMessage] = useState("");
+  const {bookData}=useBook();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const formValues = Object.fromEntries(formData.entries());
+    const formValues = JSON.stringify(Object.fromEntries(formData.entries()));
+    const parsedFormValues = JSON.parse(formValues);
 
     const url = id ? `/members/${id}` : "/members";
+    console.log(parsedFormValues, "parsedFormValues");
 
     try {
       await axiosInstance(url, {
         method: id ? "PATCH" : "POST",
-        data: formValues,
+        data: {
+          ...parsedFormValues,
+          book_id: parsedFormValues.book_id,
+          member_id: parsedFormValues.member_id,
+        },
       });
 
-      toast.success(`Member ${id ? "Updated" : "Added"} Successfully`, {
+      toast.success(`Transaction Added Successfully`, {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -37,8 +44,8 @@ const AddTransaction = () => {
         draggable: true,
         progress: undefined,
       });
-      updateMemberData(formValues as Member);
-      navigate("/member");
+      
+      navigate("/transaction");
     } catch (err: any) {
       setErrorMessage(
         err.response?.data?.message || "Failed, Please try again"
@@ -55,23 +62,22 @@ const AddTransaction = () => {
     }
   };
 
-  const fetchMemberFromId = async () => {
-    if (!id) return;
+  const fetchTransactionFromId = async () => {
     try {
-      const response = await axiosInstance(`/members/${id}`);
-      setMemberData(response.data);
+      const response = await axiosInstance(`/transactions/${id}`);
+      setTransactionData({...response.data,availability:true});
     } catch (error) {
-      console.error("Error fetching book:", error);
+      console.error("Error fetching Transaction:", error);
     }
   };
 
   useEffect(() => {
-    fetchMemberFromId();
+    fetchTransactionFromId();
   }, [id]);
 
-  const handleMemberChange = (e: any) => {
+  const handleTransactionChange = (e: any) => {
     const { name, value } = e.target;
-    setMemberData((prevData) => ({
+    setTransactionData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -83,13 +89,13 @@ const AddTransaction = () => {
         <div className="mb-6">
           <div
             className="font-bold flex items-center cursor-pointer text-gray-700 mb-3"
-            onClick={() => navigate("/member")}
+            onClick={() => navigate("/transaction")}
           >
             <ArrowLeft size={18} />
-            <span className="px-2">Back to Member</span>
+            <span className="px-2">Back to Transaction</span>
           </div>
           <h1 className="text-2xl font-bold text-center text-indigo-700">
-            {id ? "Edit Member" : "Add New Member"}
+            {id ? "Edit Transaction" : "Add New Transaction"}
           </h1>
         </div>
 
@@ -100,7 +106,7 @@ const AddTransaction = () => {
               type="text"
               id="name"
               label="Name"
-              value={memberData?.name || ""}
+              value={transactionData?.name || ""}
               onChange={handleMemberChange}
             />
             <Input
