@@ -39,7 +39,6 @@ const App = () => {
         <Route path="/delete-member/:id" element={<AddMember />} />
         <Route path="/transaction" element={<Transactions />} />
         <Route path="/add-transaction" element={<AddTransaction />} />
-        <Route path="/edit-transaction/:id" element={<AddTransaction />} />
         <Route path="/delete-transaction/:id" element={<AddTransaction />} />
       </Route>
       {/* Public routes */}
