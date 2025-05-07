@@ -47,8 +47,11 @@ const AddTransaction = () => {
         method: id ? "PATCH" : "POST",
         data: {
           ...parsedFormValues,
-          book_id: parseInt(parsedFormValues.book_id,10),
-          member_id:parseInt( parsedFormValues.member_id,10),
+          book_id: parseInt(parsedFormValues.book_id, 10),
+          member_id: parseInt(parsedFormValues.member_id, 10),
+          transaction_date: parsedFormValues.transaction_date
+            ? new Date(parsedFormValues.transaction_date).toISOString()
+            : undefined,
         },
       });
 
