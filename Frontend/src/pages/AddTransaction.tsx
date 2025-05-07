@@ -2,10 +2,11 @@ import { toast } from "react-toastify";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { axiosInstance } from "../utils/axiosInterceptor";
-import { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import {  ArrowLeft } from "lucide-react";
 import { useBook } from "../context/bookContext";
+import { useMember } from "../context/memberContext";
 
 type Transaction_Type = "borrow" | "return";
 
@@ -25,6 +26,7 @@ const AddTransaction = () => {
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
   const {bookData}=useBook();
+  const {memberData}=useMember();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,7 +77,8 @@ const AddTransaction = () => {
   const fetchTransactionFromId = async () => {
     try {
       const response = await axiosInstance(`/transactions/${id}`);
-      setTransactionData({...response.data,availability:true});
+      const formattedDate = response.data.transaction_date?new Date(response.data.transaction_date).toISOString().split("T")[0]:"";
+      setTransactionData({...response.data, transaction_date: formattedDate });
     } catch (error) {
       console.error("Error fetching Transaction:", error);
     }
@@ -85,7 +88,7 @@ const AddTransaction = () => {
     fetchTransactionFromId();
   }, [id]);
 
-  const handleTransactionChange = (e: any) => {
+  const handleTransactionChange = (e:React.ChangeEvent<HTMLImageElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setTransactionData((prevData) => ({
       ...prevData,
@@ -121,6 +124,24 @@ const AddTransaction = () => {
               {bookData.map((book) => (
                 <option key={book.id} value={book.id}>
                   {book.title}
+                </option>
+              ))}
+            </select>
+            <label
+              htmlFor="member"
+              className="block text-lg font-bold text-gray-700"
+            >
+              Member
+            </label>
+            <select
+              id="member"
+              name="member_id"
+              className="w-full px-2 py-2 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100"
+              onChange={handleTransactionChange}
+            >
+              {memberData.map((member) => (
+                <option key={member.id} value={member.id}>
+                  {member.name}
                 </option>
               ))}
             </select>
