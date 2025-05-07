@@ -6,7 +6,18 @@ import { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import {  ArrowLeft } from "lucide-react";
 import { useBook } from "../context/bookContext";
-import { Transaction } from "./Transactions";
+
+type Transaction_Type = "borrow" | "return";
+
+export interface Transaction {
+  
+  id?: number;
+  book_id?: number;
+  member_id?: number;
+  transaction_date?: string;
+  type:Transaction_Type;
+
+}
 
 const AddTransaction = () => {
   const navigate = useNavigate();
@@ -21,7 +32,7 @@ const AddTransaction = () => {
     const formValues = JSON.stringify(Object.fromEntries(formData.entries()));
     const parsedFormValues = JSON.parse(formValues);
 
-    const url = id ? `/members/${id}` : "/members";
+    const url = id ? `/transactions/${id}` : "/transactions";
     console.log(parsedFormValues, "parsedFormValues");
 
     try {
@@ -29,8 +40,8 @@ const AddTransaction = () => {
         method: id ? "PATCH" : "POST",
         data: {
           ...parsedFormValues,
-          book_id: parsedFormValues.book_id,
-          member_id: parsedFormValues.member_id,
+          book_id: parseInt(parsedFormValues.book_id,10),
+          member_id:parseInt( parsedFormValues.member_id,10),
         },
       });
 
@@ -100,14 +111,20 @@ const AddTransaction = () => {
 
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
           <div className="space-y-5">
-            <Input
-              name="name"
-              type="text"
-              id="name"
-              label="Name"
-              value={transactionData?.name || ""}
+            <label htmlFor="book" className="block text-lg font-bold text-gray-700">Book</label>
+            <select
+              id="book"
+              name="book_id"
+              className="w-full px-2 py-2 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100"
               onChange={handleTransactionChange}
-            />
+            >
+              {bookData.map((book) => (
+                <option key={book.id} value={book.id}>
+                  {book.title}
+                </option>
+              ))}
+            </select>
+
             <Input
               name="address"
               type="text"
