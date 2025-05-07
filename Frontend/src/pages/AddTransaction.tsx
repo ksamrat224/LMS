@@ -88,12 +88,13 @@ const AddTransaction = () => {
     fetchTransactionFromId();
   }, [id]);
 
-  const handleTransactionChange = (e:React.ChangeEvent<HTMLImageElement | HTMLSelectElement>) => {
+  const handleTransactionChange = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setTransactionData((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
+    } as Transaction));
+    
   };
 
   return (
@@ -162,7 +163,7 @@ const AddTransaction = () => {
             </select>
            
             <Input
-              name="data"
+              name="transaction_date"
               type="date"
               id="date"
               label="Date"
