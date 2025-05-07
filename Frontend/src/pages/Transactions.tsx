@@ -6,6 +6,17 @@ import Modal from "../components/Modal";
 import { useMember } from "../context/memberContext";
 
 
+type Transaction_Type = "borrow" | "return";
+
+ interface Transaction {
+  
+  id: number;
+  book_id: number;
+  member_id: number;
+  transaction_date: string;
+  type:Transaction_Type;
+
+}
 
 const Transactions = () => {
   const { memberData, onDelete } = useMember();
