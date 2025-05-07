@@ -1,27 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
 import { PencilIcon, TrashIcon } from "lucide-react";
 import Modal from "../components/Modal";
 import { useMember } from "../context/memberContext";
-
+import { axiosInstance } from "../utils/axiosInterceptor";
 
 type Transaction_Type = "borrow" | "return";
 
- interface Transaction {
-  
+interface Transaction {
   id: number;
   book_id: number;
   member_id: number;
   transaction_date: string;
-  type:Transaction_Type;
-
+  type: Transaction_Type;
 }
 
 const Transactions = () => {
-  const { memberData, onDelete } = useMember();
+  const { onDelete } = useMember();
   const [isModelOpen, setIsModelOpen] = useState(false);
-  const [selectedTransactionId, setSelectedTransactionId] = useState<number | null>(null);
+  const [selectedTransactionId, setSelectedTransactionId] = useState<
+    number | null
+  >(null);
   const [transactionData, setTransactionData] = useState<Transaction[]>([]);
 
   const handleDelete = async () => {
@@ -40,14 +40,24 @@ const Transactions = () => {
   };
 
   const navigate = useNavigate();
+  const fetchTransaction = async () => {
+    try {
+      const response = await axiosInstance(`/transactions`);
+      console.log(response.data, "response.data");
+      setTransactionData(response.data);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
+  useEffect(() => {
+    fetchTransaction();
+  }, []);
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white">
       {/* Header */}
       <header className="py-6 text-center bg-gradient-to-r from-purple-700 to-blue-700 shadow-lg">
-        <p className="text-lg mt-2">
-          Transactions in our library
-        </p>
+        <p className="text-lg mt-2">Transactions in our library</p>
         <div className="mt-4 flex justify-end pr-6 space-x-4">
           <Button
             label="Add Transaction"
@@ -76,7 +86,7 @@ const Transactions = () => {
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
                   Date
                 </th>
-               
+
                 <th className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider border border-gray-300">
                   Actions
                 </th>
@@ -102,12 +112,14 @@ const Transactions = () => {
                   <td className="px-6 py-4 text-gray-900 border border-gray-300">
                     {transaction.transaction_date}
                   </td>
-                  
+
                   <td className="px-6 py-4 text-gray-900 border border-gray-300">
                     <div className="flex space-x-4">
                       <PencilIcon
                         className="text-blue-600 cursor-pointer"
-                        onClick={() => navigate(`/edit-transaction/${transaction.id}`)}
+                        onClick={() =>
+                          navigate(`/edit-transaction/${transaction.id}`)
+                        }
                       />
                       <TrashIcon
                         className="text-red-600 cursor-pointer"
