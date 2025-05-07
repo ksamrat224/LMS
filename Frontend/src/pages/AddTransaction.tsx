@@ -8,7 +8,6 @@ import {  ArrowLeft } from "lucide-react";
 import { useBook } from "../context/bookContext";
 import { Transaction } from "./Transactions";
 
-type Transaction_Type = "borrow" | "return";
 const AddTransaction = () => {
   const navigate = useNavigate();
   const [transactionData, setTransactionData] = useState<Transaction>();
@@ -107,31 +106,31 @@ const AddTransaction = () => {
               id="name"
               label="Name"
               value={transactionData?.name || ""}
-              onChange={handleMemberChange}
+              onChange={handleTransactionChange}
             />
             <Input
               name="address"
               type="text"
               id="address"
               label="Address"
-              value={memberData?.address || ""}
-              onChange={handleMemberChange}
+              value={transactionData?.address || ""}
+              onChange={handleTransactionChange}
             />
             <Input
               name="email"
               type="email"
               id="email"
               label="Email"
-              value={memberData?.email || ""}
-              onChange={handleMemberChange}
+              value={transactionData?.email || ""}
+              onChange={handleTransactionChange}
             />
             <Input
               name="mobile"
               type="tel"
               id="mobile"
               label="Mobile"
-              value={memberData?.mobile || ""}
-              onChange={handleMemberChange}
+              value={transactionData?.mobile || ""}
+              onChange={handleTransactionChange}
             />
           </div>
 
@@ -143,7 +142,7 @@ const AddTransaction = () => {
 
           <div className="sticky bottom-0 py-3 px-6 rounded-b-md text-center z-10">
             <Button
-              label={id ? "Update Member" : "Add Member"}
+              label={id ? "Update Transaction" : "Add Transaction"}
               type="submit"
               bgColor="bg-indigo-700 hover:bg-indigo-800"
             />
