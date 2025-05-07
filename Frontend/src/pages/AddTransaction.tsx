@@ -124,29 +124,28 @@ const AddTransaction = () => {
                 </option>
               ))}
             </select>
-
-            <Input
-              name="address"
-              type="text"
-              id="address"
-              label="Address"
-              value={transactionData?.address || ""}
+            <label
+              htmlFor="type"
+              className="block text-lg font-bold text-gray-700"
+            >
+              Type
+            </label>
+            <select
+              id="type"
+              name="type"
+              className="w-full px-2 py-2 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100"
               onChange={handleTransactionChange}
-            />
+            >
+              <option value={"borrow"}>Borrow</option>
+              <option value={"return"}>Return</option>
+            </select>
+           
             <Input
-              name="email"
-              type="email"
-              id="email"
-              label="Email"
-              value={transactionData?.email || ""}
-              onChange={handleTransactionChange}
-            />
-            <Input
-              name="mobile"
-              type="tel"
-              id="mobile"
-              label="Mobile"
-              value={transactionData?.mobile || ""}
+              name="data"
+              type="date"
+              id="date"
+              label="Date"
+              value={transactionData?.transaction_date || ""}
               onChange={handleTransactionChange}
             />
           </div>
