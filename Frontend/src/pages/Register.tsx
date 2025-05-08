@@ -4,6 +4,14 @@ import Input from "../components/Input";
 import { useNavigate } from "react-router";
 import { axiosInstance } from "../utils/axiosInterceptor";
 import { toast } from "react-toastify";
+import {object, string} from "yup";
+
+let registerSchema = object({
+  name:string().required(),
+  email:string().email().required(),
+  mobile:string().required(),
+  password:string().required("password is required"),
+});
 
 const Register = () => {
   const navigate = useNavigate();
