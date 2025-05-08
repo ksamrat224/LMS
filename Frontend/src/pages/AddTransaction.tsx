@@ -4,20 +4,18 @@ import Input from "../components/Input";
 import { axiosInstance } from "../utils/axiosInterceptor";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import {  ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useBook } from "../context/bookContext";
 import { useMember } from "../context/memberContext";
 
 type Transaction_Type = "borrow" | "return";
 
 export interface Transaction {
-  
   id?: number;
   book_id?: number;
   member_id?: number;
   transaction_date?: string;
-  type:Transaction_Type;
-
+  type: Transaction_Type;
 }
 
 const AddTransaction = () => {
@@ -30,8 +28,8 @@ const AddTransaction = () => {
   });
   const { id } = useParams();
   const [errorMessage, setErrorMessage] = useState("");
-  const {bookData}=useBook();
-  const {memberData}=useMember();
+  const { bookData } = useBook();
+  const { memberData } = useMember();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,7 +62,7 @@ const AddTransaction = () => {
         draggable: true,
         progress: undefined,
       });
-      
+
       navigate("/transaction");
     } catch (err: any) {
       setErrorMessage(
@@ -85,8 +83,10 @@ const AddTransaction = () => {
   const fetchTransactionFromId = async () => {
     try {
       const response = await axiosInstance(`/transactions/${id}`);
-      const formattedDate = response.data.transaction_date?new Date(response.data.transaction_date).toISOString().split("T")[0]:"";
-      setTransactionData({...response.data, transaction_date: formattedDate });
+      const formattedDate = response.data.transaction_date
+        ? new Date(response.data.transaction_date).toISOString().split("T")[0]
+        : "";
+      setTransactionData({ ...response.data, transaction_date: formattedDate });
     } catch (error) {
       console.error("Error fetching Transaction:", error);
     }
@@ -96,13 +96,17 @@ const AddTransaction = () => {
     fetchTransactionFromId();
   }, [id]);
 
-  const handleTransactionChange = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleTransactionChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setTransactionData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    } as Transaction));
-    
+    setTransactionData(
+      (prevData) =>
+        ({
+          ...prevData,
+          [name]: value,
+        } as Transaction)
+    );
   };
 
   return (
@@ -123,7 +127,12 @@ const AddTransaction = () => {
 
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
           <div className="space-y-5">
-            <label htmlFor="book" className="block text-lg font-bold text-gray-700">Book</label>
+            <label
+              htmlFor="book"
+              className="block text-lg font-bold text-gray-700"
+            >
+              Book
+            </label>
             <select
               id="book"
               name="book_id"
@@ -169,7 +178,7 @@ const AddTransaction = () => {
               <option value={"borrow"}>Borrow</option>
               <option value={"return"}>Return</option>
             </select>
-           
+
             <Input
               name="transaction_date"
               type="date"
