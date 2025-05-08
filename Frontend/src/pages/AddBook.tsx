@@ -13,7 +13,7 @@ const AddBook = () => {
   const { id } = useParams();
   const [base64IMG, setBase64IMG] = useState<string | ArrayBuffer | null>(null);
   const [bookData, setBookData] = useState<Book>();
-  const {updateBookData} = useBook();
+  const { updateBookData } = useBook();
   const [errorMessage, setErrorMessage] = useState("");
 
   const convertToBase64 = (selectedFile: File) => {
@@ -91,10 +91,22 @@ const AddBook = () => {
     if (name === "book_img" && files && files[0]) {
       convertToBase64(files[0]);
     } else {
-      setBookData((prevData) => ({
-        ...prevData,
-        [name]: type === "checkbox" ? checked : value,
-      }));
+      setBookData((prevData) => {
+        const updatedData = {
+          ...prevData,
+          [name]: type === "checkbox" ? checked : value,
+        };
+
+        // Ensure required fields are not undefined
+        return {
+          ...updatedData,
+          title: updatedData.title || "",
+          author: updatedData.author || "",
+          quantity: updatedData.quantity || 0,
+          availability: updatedData.availability || false,
+          book_img: updatedData.book_img || "",
+        } as Book;
+      });
     }
   };
 

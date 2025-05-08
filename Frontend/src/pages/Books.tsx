@@ -6,12 +6,12 @@ import Modal from "../components/Modal";
 import { useBook } from "../context/bookContext";
 
 export interface Book {
-  title?: string;
-  author?: string;
-  id?: number;
-  quantity?: number;
-  availability?: boolean;
-  book_img?: string;
+  title: string;
+  author: string;
+  id: number;
+  quantity: number;
+  availability: boolean;
+  book_img: string;
 }
 
 const Books = () => {
