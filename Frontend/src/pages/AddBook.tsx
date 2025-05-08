@@ -7,6 +7,14 @@ import { useNavigate, useParams } from "react-router";
 import { Book } from "./Books";
 import { Image, ArrowLeft } from "lucide-react";
 import { useBook } from "../context/bookContext";
+import { object, string } from "yup";
+
+const bookSchema=object({
+  title: string().required("Title is required"),
+  author: string().required("Author is required"),
+  quantity: string().required("Quantity is required"),
+  availability: string().required("Availability is required"),
+})
 
 const AddBook = () => {
   const navigate = useNavigate();
