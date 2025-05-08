@@ -34,14 +34,7 @@ const AddBook = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const formData = new FormData(e.currentTarget);
-    // const formValues = Object.fromEntries(formData.entries());
-    // const parsedFormValues = {
-    //   ...formValues,
-    //   quantity: parseInt(formValues.quantity as string, 10),
-    //   availability: formValues.availability === "on",
-    //   book_img: base64IMG || bookData?.book_img,
-    // };
+    
 
     const url = id ? `/books/${id}` : "/books";
 
