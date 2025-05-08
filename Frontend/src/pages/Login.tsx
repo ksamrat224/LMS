@@ -24,7 +24,7 @@ const Login = () => {
       console.log(values);
       const response = await axiosInstance(`/auth/login`, {
         method: "POST",
-        data: formValues,
+        data: values,
       });
       localStorage.setItem("token", response.data.token);
       navigate("/"); // Redirect to the home page after successful login
