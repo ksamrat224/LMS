@@ -20,6 +20,8 @@ const Login = () => {
     const formValues = Object.fromEntries(formData.entries());
 
     try {
+      const values= await loginSchema.validate(formValues)
+      console.log(values);
       const response = await axiosInstance(`/auth/login`, {
         method: "POST",
         data: formValues,
