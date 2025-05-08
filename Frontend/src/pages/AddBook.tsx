@@ -7,13 +7,13 @@ import { useNavigate, useParams } from "react-router";
 import { Book } from "./Books";
 import { Image, ArrowLeft } from "lucide-react";
 import { useBook } from "../context/bookContext";
-import { object, string } from "yup";
+import { boolean, number, object, string } from "yup";
 
 const bookSchema=object({
   title: string().required("Title is required"),
   author: string().required("Author is required"),
-  quantity: string().required("Quantity is required"),
-  availability: string().required("Availability is required"),
+  quantity: number().required("Quantity is required"),
+  availability: boolean().required("Availability is required"),
 })
 
 const AddBook = () => {
@@ -34,21 +34,25 @@ const AddBook = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const formValues = Object.fromEntries(formData.entries());
-    const parsedFormValues = {
-      ...formValues,
-      quantity: parseInt(formValues.quantity as string, 10),
-      availability: formValues.availability === "on",
-      book_img: base64IMG || bookData?.book_img,
-    };
+    // const formData = new FormData(e.currentTarget);
+    // const formValues = Object.fromEntries(formData.entries());
+    // const parsedFormValues = {
+    //   ...formValues,
+    //   quantity: parseInt(formValues.quantity as string, 10),
+    //   availability: formValues.availability === "on",
+    //   book_img: base64IMG || bookData?.book_img,
+    // };
 
     const url = id ? `/books/${id}` : "/books";
 
     try {
+      const values= await bookSchema.validate(bookData);
       await axiosInstance(url, {
         method: id ? "PATCH" : "POST",
-        data: parsedFormValues,
+        data:{
+          ...values,
+          book_img: base64IMG || bookData?.book_img,
+        },
       });
 
       toast.success(`Book ${id ? "Updated" : "Added"} Successfully`, {
@@ -60,7 +64,10 @@ const AddBook = () => {
         draggable: true,
         progress: undefined,
       });
-      updateBookData(parsedFormValues as Book);
+      updateBookData({
+        ...bookData,
+        book_img: base64IMG || bookData?.book_img,
+      } as Book);
       navigate("/book");
     } catch (err: any) {
       setErrorMessage(
