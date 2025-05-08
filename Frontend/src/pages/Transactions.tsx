@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
-import {  TrashIcon } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import Modal from "../components/Modal";
 import { useMember } from "../context/memberContext";
 import { axiosInstance } from "../utils/axiosInterceptor";
@@ -110,12 +110,15 @@ const Transactions = () => {
                     {transaction.type}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border border-gray-300">
-                    {transaction.transaction_date}
+                    {transaction.transaction_date
+                      ? new Date(
+                          transaction.transaction_date
+                        ).toLocaleDateString("en-CA")
+                      : ""}
                   </td>
 
                   <td className="px-6 py-4 text-gray-900 border border-gray-300">
                     <div className="flex space-x-4">
-                     
                       <TrashIcon
                         className="text-red-600 cursor-pointer"
                         onClick={() => openModel(transaction.id as number)}
