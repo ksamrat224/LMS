@@ -8,7 +8,7 @@ import {object, string} from "yup";
 
 let registerSchema = object({
   name:string().required(),
-  email:string().email().required(),
+  email:string().required(),
   mobile:string().required(),
   password:string().required("password is required"),
 });
@@ -24,9 +24,11 @@ const Register = () => {
   
 
     try {
+      const values = await registerSchema.validate(formValues);
+      console.log(values, "isValid");
       const response = await axiosInstance(`/auth/register`, {
         method: "POST",
-        data: formValues,
+        data: values,
       });
       localStorage.setItem("token", response.data.token);
          // Store the token in local storage

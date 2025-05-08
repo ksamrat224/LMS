@@ -14,7 +14,6 @@ const Input = ({
   type,
   id,
   name,
-  value = "",
   required = true,
   ...rest
 }: InputProps) => {
@@ -38,7 +37,7 @@ const Input = ({
           type={inputType}
           id={id}
           name={name}
-          value={value}
+          // value={value}
           required={required}
           className={`border-none outline-0 ${
             isPassword ? "w-[90%]" : "w-full"
