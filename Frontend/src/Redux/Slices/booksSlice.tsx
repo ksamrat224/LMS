@@ -20,7 +20,7 @@ const initialState:BookInitialState={
 }
 
 export const booksSlice = createSlice({
-    name: "books",
+    name: "Books",
     initialState: initialState,
     reducers:{
         addBook:(state)=>{
