@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Book } from "../../pages/Books";
-import { data } from "react-router";
 
 interface Book{
     title?: string;
@@ -23,14 +21,19 @@ const initialState:BookInitialState={
 
 export const booksSlice = createSlice({
     name: "books",
-    initialState: {
-        data: [],
-        isLoading: false,
-        error: null,
-    },
+    initialState: initialState,
     reducers:{
+        addBook:(state)=>{
+            state.data=[
+                {
+                    id:1,
+                    title: "Book Title",
+                    author: "Book Author",
+                },
+            ];
+        },
 
-    }
+    },
 
     });
         
