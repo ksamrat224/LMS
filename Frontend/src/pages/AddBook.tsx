@@ -10,7 +10,7 @@ import { useBook } from "../context/bookContext";
 import { boolean, number, object, string } from "yup";
 
 const bookSchema=object({
-  title: string().required("Title is required"),
+  title: string().required("Title is required"), 
   author: string().required("Author is required"),
   quantity: number().required("Quantity is required"),
   availability: boolean().required("Availability is required"),
