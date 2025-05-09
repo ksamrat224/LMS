@@ -10,6 +10,11 @@ interface Book{
     book_img?: string | ArrayBuffer | null;
     id?: number;
 }
+interface BookInitialState{
+    data: Book[];
+    isLoading: boolean;
+    error: string | null;
+}
 const initialState:BookInitialState={
     data: [],
     isLoading: false,
