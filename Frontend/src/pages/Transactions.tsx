@@ -5,6 +5,7 @@ import { TrashIcon } from "lucide-react";
 import Modal from "../components/Modal";
 import { useMember } from "../context/memberContext";
 import { axiosInstance } from "../utils/axiosInterceptor";
+import { useBook } from "../context/bookContext";
 
 type Transaction_Type = "borrow" | "return";
 
@@ -23,6 +24,7 @@ const Transactions = () => {
     number | null
   >(null);
   const [transactionData, setTransactionData] = useState<Transaction[]>([]);
+  const {bookData} = useBook();
 
   const handleDelete = async () => {
     if (selectedTransactionId) {
