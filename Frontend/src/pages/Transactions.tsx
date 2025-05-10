@@ -59,6 +59,10 @@ const Transactions = () => {
     const book = bookData.find((book) => book.id === book_id);
     return book ? book.title : "Unknown Book";
   };
+  const renderMemberName = (member_id: number) => {
+    const member = memberData.find((member) => member.id === member_id);
+    return member ? member.name : "Unknown Member";
+  };
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white">
