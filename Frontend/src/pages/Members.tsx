@@ -36,7 +36,6 @@ const Members = () => {
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-      {/* Header */}
       <header className="py-6 text-center bg-gradient-to-r from-purple-700 to-blue-700 shadow-lg">
         <p className="text-lg mt-2">
           Members in our library
@@ -51,7 +50,6 @@ const Members = () => {
         </div>
       </header>
 
-      {/* Table Container */}
       <div className="flex-grow overflow-auto">
         <div className="h-full">
           <table className="w-full table-fixed bg-white border-collapse border border-gray-300">
