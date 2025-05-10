@@ -55,8 +55,8 @@ const Transactions = () => {
   useEffect(() => {
     fetchTransaction();
   }, []);
-  const renderBookTitle = (bookId: number) => {
-    const book = bookData.find((book) => book.id === bookId);
+  const renderBookTitle = (book_id: number) => {
+    const book = bookData.find((book) => book.id === book_id);
     return book ? book.title : "Unknown Book";
   };
 
