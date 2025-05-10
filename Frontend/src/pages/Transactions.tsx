@@ -55,6 +55,10 @@ const Transactions = () => {
   useEffect(() => {
     fetchTransaction();
   }, []);
+  const renderBookTitle = (bookId: number) => {
+    const book = bookData.find((book) => book.id === bookId);
+    return book ? book.title : "Unknown Book";
+  };
 
   return (
     <div className="flex flex-col h-screen bg-gradient-to-r from-blue-500 to-purple-600 text-white">
