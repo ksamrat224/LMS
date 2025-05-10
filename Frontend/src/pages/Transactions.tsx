@@ -108,7 +108,7 @@ const Transactions = () => {
                   } hover:bg-blue-100 transition duration-200`}
                 >
                   <td className="px-6 py-4 text-gray-900 border border-gray-300 font-bold truncate">
-                    {transaction.book_id}
+                    {renderBookTitle(transaction.book_id)}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border border-gray-300 truncate">
                     {transaction.member_id}
