@@ -55,12 +55,6 @@ const AddTransaction = () => {
 
       toast.success(`Transaction Added Successfully`, {
         position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
       });
 
       navigate("/transaction");
@@ -70,12 +64,6 @@ const AddTransaction = () => {
       );
       toast.error("Failed, Please try again", {
         position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
       });
     }
   };
