@@ -115,7 +115,7 @@ const Transactions = () => {
                     {renderBookTitle(transaction.book_id)}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border border-gray-300 truncate">
-                    {transaction.member_id}
+                    {renderMemberName(transaction.member_id)}
                   </td>
                   <td className="px-6 py-4 text-gray-900 border border-gray-300 truncate">
                     {transaction.type}
