@@ -25,6 +25,7 @@ const Transactions = () => {
   >(null);
   const [transactionData, setTransactionData] = useState<Transaction[]>([]);
   const {bookData} = useBook();
+  const {memberData} = useMember();
 
   const handleDelete = async () => {
     if (selectedTransactionId) {
