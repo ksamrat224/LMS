@@ -85,18 +85,7 @@ npm run build
 # Start development server
 npm run dev
 ```
-# Clone repository
-git clone https://github.com/ksamrat224/LMS.git
-cd LMS
 
-# Install dependencies
-npm install
-
-# Set up environment
-cp .env.example .env
-
-# Start the project
-npm run dev
 
 
 
@@ -170,9 +159,7 @@ JWT_SECRET=your_jwt_secret_key
 }
 ```
 
-## API Reference
 
-The LMS API provides endpoints for managing books, users, and other resources.
 
 
 
